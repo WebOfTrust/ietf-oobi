@@ -19,8 +19,8 @@
 # Change the file extension to match the format (.xml for XML, etc...)
 #
 ###
-title: "TODO - Your title"
-abbrev: "TODO - Abbreviation"
+title: "Out-Of-Band-Introduction (OOBI) Protocol"
+abbrev: "OOBI"
 category: info
 
 docname: draft-todo-yourname-protocol-latest
@@ -38,9 +38,9 @@ venue:
 
 author:
  -
-    fullname: Your Name Here
-    organization: Your Organization Here
-    email: your.email@example.com
+    fullname: Samuel M. Smith
+    organization: ProSapien LLC
+    email: sam@prosapien.com
 
 normative:
 
