@@ -409,8 +409,7 @@ a config file.
 
 # Security Considerations
 
-TODO Security
-
+OOBIs are out-of-band with respect to the security of the infrastructure to which they provide an introduction. OOBIs assume that any introduced endpoints will be subsequently verified by their associated in-band mechanisms. There are no other security considerations.
 
 # IANA Considerations
 
