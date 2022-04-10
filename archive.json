@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2022-04-07T00:29:47.200489+00:00",
+  "timestamp": "2022-04-10T00:25:45.729782+00:00",
   "repo": "WebOfTrust/ietf-oobi",
   "labels": [
     {
@@ -187,6 +187,62 @@
       "mergedBy": "SmithSamuelM",
       "mergeCommit": {
         "oid": "c079bf6786f97a1d1aeec45a5983e832aa07cbe7"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 6,
+      "id": "PR_kwDOHIiMYM415Fn5",
+      "title": "Added references and body and intro draft first pass",
+      "url": "https://github.com/WebOfTrust/ietf-oobi/pull/6",
+      "state": "MERGED",
+      "author": "SmithSamuelM",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Signed-off-by: Samuel M Smith <sam@samuelsmith.org>",
+      "createdAt": "2022-04-08T19:29:20Z",
+      "updatedAt": "2022-04-08T19:38:06Z",
+      "baseRepository": "WebOfTrust/ietf-oobi",
+      "baseRefName": "main",
+      "baseRefOid": "c079bf6786f97a1d1aeec45a5983e832aa07cbe7",
+      "headRepository": "SmithSamuelM/ietf-oobi",
+      "headRefName": "main",
+      "headRefOid": "ce39ef7c9b8fa8503c9a0a7dfd5809de7983affa",
+      "closedAt": "2022-04-08T19:38:06Z",
+      "mergedAt": "2022-04-08T19:38:06Z",
+      "mergedBy": "SmithSamuelM",
+      "mergeCommit": {
+        "oid": "3d811d4c00727d66b9ce18aa95d9a76fa920140f"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 7,
+      "id": "PR_kwDOHIiMYM415HrH",
+      "title": "added security considerations",
+      "url": "https://github.com/WebOfTrust/ietf-oobi/pull/7",
+      "state": "MERGED",
+      "author": "SmithSamuelM",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Signed-off-by: Samuel M Smith <sam@samuelsmith.org>",
+      "createdAt": "2022-04-08T19:41:54Z",
+      "updatedAt": "2022-04-08T19:44:30Z",
+      "baseRepository": "WebOfTrust/ietf-oobi",
+      "baseRefName": "main",
+      "baseRefOid": "3d811d4c00727d66b9ce18aa95d9a76fa920140f",
+      "headRepository": "SmithSamuelM/ietf-oobi",
+      "headRefName": "main",
+      "headRefOid": "2ec73e56b19e81b4cff85eb5ffd55b738d7d540e",
+      "closedAt": "2022-04-08T19:44:30Z",
+      "mergedAt": "2022-04-08T19:44:30Z",
+      "mergedBy": "SmithSamuelM",
+      "mergeCommit": {
+        "oid": "7fa3577303bef7c84b3cec59baa6091928666f23"
       },
       "comments": [],
       "reviews": []
