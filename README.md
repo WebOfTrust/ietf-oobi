@@ -2,7 +2,7 @@
 
 This is the working area for the individual Internet-Draft, "Out-Of-Band-Introduction (OOBI) Protocol".
 
-* [Editor's Copy](https://WebOfTrust.github.io/ietf-oobi/#go.draft-ssmith-oobi.html)
+* [Editor's Copy](https://WebOfTrust.github.io/ietf-oobi/)
 * [Datatracker Page](https://datatracker.ietf.org/doc/draft-ssmith-oobi)
 * [Individual Draft](https://datatracker.ietf.org/doc/html/draft-ssmith-oobi)
 * [Compare Editor's Copy to Individual Draft](https://WebOfTrust.github.io/ietf-oobi/#go.draft-ssmith-oobi.diff)
