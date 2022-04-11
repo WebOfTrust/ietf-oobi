@@ -286,8 +286,8 @@ Rules for Acceptance of update:
   WHEN prior record.  
     Compare key-state of the update’s verified signature against key-state of prior record’s verified signature.
    
-    Accept IF update’s key-state is later (in KEL) than prior record’s key-state.
-    Accept IF update’s and prior record’s key-states are the same AND
+    Accept IF update’s key-state appears later in KEL than prior record’s key-state.
+    Accept IF update’s and prior record’s key-states appear at same location in KEL AND
               update’s date-time is later than prior record’s date-time.
 ~~~
 
