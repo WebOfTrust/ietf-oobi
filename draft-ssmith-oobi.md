@@ -208,6 +208,7 @@ The OOBI is intentionally simplistic to enable very low byte count introductions
 
 A recipient of an OOBI verifies the OOBI by authenticating the endpoint URL in the OOBI with respect to an authorization signed by the controller of the AID in the OOBI. This authorization follows the BADA policy or rules. This authorization is usually obtained by querying the OOBI URL. The service endpoint at the URL responds with a resource that contains the supporting BADA reply messages that are KERI authenticatable. 
 
+Everything is signed. Primary attack against signed data is a replay attack.
 Replay Attack. Replay of Authenticated (signed) Data
 TEL (ACDC) VDR  Issue Revoke  (kel anchored tel events) Heavyweight Non TEL based. Best Available Data Model (BADA)
 KEL anchored ordered data 
@@ -231,30 +232,65 @@ Non-interactive.
 Memory (sequence number, date-time stamp, nullification)
 More scalable  
 
+Zero Trust Percolated Discovery
+Primary Discovery Data are Endpoints of KERI Components:
+Controllers, Agents, Backers (Witness, Registrar), Watchers, Jurors, Judges, Forwarders
+Endpoint is URL IP Scheme, Host, Port, Path etc
+Data Model for Securely Managing EndPoint Data
+Controller (Principal AID) 
+Authorizes a Component to act as Player in Role
+Player is AID of Component Controller
+Role is purpose or function such as Watcher
+Zero Trust Data as  Authorization in context of KERI KeyState
+ACDC Issue Revoke Reissue model
+RUN model (Read, Update, Nullify) 
+Anchored or Signed with replay and deletion attack protection
+
+Minimally Sufficient Means
+Leverage existing internet but safely, with end-verifiability
+Internet DNS/CA is out-of-band w.r.t. KERI security
+Use DSN/CA for out-of-band introductions w.r.t. KERI only, not authentication
+Use IP addresses (128.187.16.184) for communication
 
 ## BADA Rules
 
 
-Update is included in or anchored to AID’s key-state in KEL
+### KEL Anchored Updates
 
-Rules for Acceptance of update  
-Accept if no prior record.  
-Accept if update’s anchor is later than prior record’s anchor.  
+The Update is included in or anchored to AID’s key-state in KEL.
 
-Update is signed by AID, but the update itself is not included in or anchored to AID’s KEL  
+~~~
+Rules for Acceptance of update:  (in order of priority)
+  Confirm Update is anchored in AID's KEL.
+  WHEN no prior record.
+     Accept always. 
+  WHEN prior record. 
+     Accept IF update’s anchor appears later in KEL than prior record’s anchor.  
+~~~
 
+### Signed (Not Anchored) Updates
+
+The Update is signed by AID, but the update itself is not included in or anchored to AID’s KEL.
 1. Ephemeral AID whose key-state is fixed (no KEL needed)
 2. Persistent AID whose key-state is provided by KEL  
 
 
-Rules for Acceptance of update 
-If no prior record. 
-Accept if signature verifies against any key-state.
-If prior record.  
-Compare key-state of the update’s verified signature against key-state of prior record’s verified signature.
-   Accept If update’s key-state is later (in KEL)  than prior record’s key-state.
-   Accept if update’s and prior record’s key-states are the same  
-                     \& update’s date-time is later than prior record’s date-time.
+~~~
+Rules for Acceptance of update:
+  Confirm signature on Update verifies against indicated key-state under which signature was made.
+  Do NOT accept IF signature does not verify.
+  
+  WHEN no prior record: 
+    Accept (always).
+  
+  WHEN prior record.  
+    Compare key-state of the update’s verified signature against key-state of prior record’s verified signature.
+   
+    Accept IF update’s key-state appears later in KEL than prior record’s key-state.
+    Accept IF update’s and prior record’s key-states appear at same location in KEL AND
+              update’s date-time is later than prior record’s date-time.
+~~~
+
                      
 ## RUN off the CRUD  
 
