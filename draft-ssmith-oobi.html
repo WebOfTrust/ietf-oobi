@@ -1123,7 +1123,15 @@ svg [stroke="fill"], svg [fill^="#fff"] {
             <p id="section-toc.1-1.3.1"><a href="#section-3" class="xref">3</a>.  <a href="#name-bada-best-available-data-ac" class="xref">BADA (Best-Available-Data-Acceptance) Policy</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1">
-                <p id="section-toc.1-1.3.2.1.1" class="keepWithNext"><a href="#section-3.1" class="xref">3.1</a>.  <a href="#name-bada-rules" class="xref">BADA Rules</a></p>
+                <p id="section-toc.1-1.3.2.1.1"><a href="#section-3.1" class="xref">3.1</a>.  <a href="#name-bada-rules" class="xref">BADA Rules</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1.2.1">
+                    <p id="section-toc.1-1.3.2.1.2.1.1" class="keepWithNext"><a href="#section-3.1.1" class="xref">3.1.1</a>.  <a href="#name-kel-anchored-updates" class="xref">KEL Anchored Updates</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1.2.2">
+                    <p id="section-toc.1-1.3.2.1.2.2.1"><a href="#section-3.1.2" class="xref">3.1.2</a>.  <a href="#name-signed-not-anchored-updates" class="xref">Signed (Not Anchored) Updates</a></p>
+</li>
+                </ul>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.2">
                 <p id="section-toc.1-1.3.2.2.1"><a href="#section-3.2" class="xref">3.2</a>.  <a href="#name-run-off-the-crud" class="xref">RUN off the CRUD</a></p>
@@ -1249,7 +1257,8 @@ svg [stroke="fill"], svg [fill^="#fff"] {
 <a href="#section-3" class="section-number selfRef">3. </a><a href="#name-bada-best-available-data-ac" class="section-name selfRef">BADA (Best-Available-Data-Acceptance) Policy</a>
       </h2>
 <p id="section-3-1">A recipient of an OOBI verifies the OOBI by authenticating the endpoint URL in the OOBI with respect to an authorization signed by the controller of the AID in the OOBI. This authorization follows the BADA policy or rules. This authorization is usually obtained by querying the OOBI URL. The service endpoint at the URL responds with a resource that contains the supporting BADA reply messages that are KERI authenticatable.<a href="#section-3-1" class="pilcrow">¶</a></p>
-<p id="section-3-2">Replay Attack. Replay of Authenticated (signed) Data
+<p id="section-3-2">Everything is signed. Primary attack against signed data is a replay attack.
+Replay Attack. Replay of Authenticated (signed) Data
 TEL (ACDC) VDR  Issue Revoke  (kel anchored tel events) Heavyweight<br>Non TEL based. Best Available Data Model (BADA)
 KEL anchored ordered data 
 KeyState-DateTime of signature ordered data.
@@ -1269,30 +1278,74 @@ Nonce
 Non-interactive.
 Memory (sequence number, date-time stamp, nullification)
 More scalable<a href="#section-3-3" class="pilcrow">¶</a></p>
+<p id="section-3-4">Zero Trust Percolated Discovery
+Primary Discovery Data are Endpoints of KERI Components:
+Controllers, Agents, Backers (Witness, Registrar), Watchers, Jurors, Judges, Forwarders
+Endpoint is URL IP Scheme, Host, Port, Path etc
+Data Model for Securely Managing EndPoint Data
+Controller (Principal AID) 
+Authorizes a Component to act as Player in Role
+Player is AID of Component Controller
+Role is purpose or function such as Watcher
+Zero Trust Data as  Authorization in context of KERI KeyState
+ACDC Issue Revoke Reissue model
+RUN model (Read, Update, Nullify) 
+Anchored or Signed with replay and deletion attack protection<a href="#section-3-4" class="pilcrow">¶</a></p>
+<p id="section-3-5">Minimally Sufficient Means
+Leverage existing internet but safely, with end-verifiability
+Internet DNS/CA is out-of-band w.r.t. KERI security
+Use DSN/CA for out-of-band introductions w.r.t. KERI only, not authentication
+Use IP addresses (128.187.16.184) for communication<a href="#section-3-5" class="pilcrow">¶</a></p>
 <div id="bada-rules">
 <section id="section-3.1">
         <h3 id="name-bada-rules">
 <a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-bada-rules" class="section-name selfRef">BADA Rules</a>
         </h3>
-<p id="section-3.1-1">Update is included in or anchored to AID's key-state in KEL<a href="#section-3.1-1" class="pilcrow">¶</a></p>
-<p id="section-3.1-2">Rules for Acceptance of update<br>
-Accept if no prior record.<br>
-Accept if update's anchor is later than prior record's anchor.<a href="#section-3.1-2" class="pilcrow">¶</a></p>
-<p id="section-3.1-3">Update is signed by AID, but the update itself is not included in or anchored to AID's KEL<a href="#section-3.1-3" class="pilcrow">¶</a></p>
-<ol start="1" type="1" class="normal type-1" id="section-3.1-4">
-<li id="section-3.1-4.1">Ephemeral AID whose key-state is fixed (no KEL needed)<a href="#section-3.1-4.1" class="pilcrow">¶</a>
-</li>
-          <li id="section-3.1-4.2">Persistent AID whose key-state is provided by KEL<a href="#section-3.1-4.2" class="pilcrow">¶</a>
-</li>
-        </ol>
-<p id="section-3.1-5">Rules for Acceptance of update 
-If no prior record. 
-Accept if signature verifies against any key-state.
-If prior record.<br>
-Compare key-state of the update's verified signature against key-state of prior record's verified signature.
-   Accept If update's key-state is later (in KEL)  than prior record's key-state.
-   Accept if update's and prior record's key-states are the same<br>
-                     \&amp; update's date-time is later than prior record's date-time.<a href="#section-3.1-5" class="pilcrow">¶</a></p>
+<div id="kel-anchored-updates">
+<section id="section-3.1.1">
+          <h4 id="name-kel-anchored-updates">
+<a href="#section-3.1.1" class="section-number selfRef">3.1.1. </a><a href="#name-kel-anchored-updates" class="section-name selfRef">KEL Anchored Updates</a>
+          </h4>
+<p id="section-3.1.1-1">The Update is included in or anchored to AID's key-state in KEL.<a href="#section-3.1.1-1" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-3.1.1-2">
+<pre>
+Rules for Acceptance of update:  (in order of priority)
+  Confirm Update is anchored in AID's KEL.
+  WHEN no prior record.
+     Accept always.
+  WHEN prior record.
+     Accept IF update’s anchor appears later in KEL than prior record’s anchor.
+</pre><a href="#section-3.1.1-2" class="pilcrow">¶</a>
+</div>
+</section>
+</div>
+<div id="signed-not-anchored-updates">
+<section id="section-3.1.2">
+          <h4 id="name-signed-not-anchored-updates">
+<a href="#section-3.1.2" class="section-number selfRef">3.1.2. </a><a href="#name-signed-not-anchored-updates" class="section-name selfRef">Signed (Not Anchored) Updates</a>
+          </h4>
+<p id="section-3.1.2-1">The Update is signed by AID, but the update itself is not included in or anchored to AID's KEL.
+1. Ephemeral AID whose key-state is fixed (no KEL needed)
+2. Persistent AID whose key-state is provided by KEL<a href="#section-3.1.2-1" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-3.1.2-2">
+<pre>
+Rules for Acceptance of update:
+  Confirm signature on Update verifies against indicated key-state under which signature was made.
+  Do NOT accept IF signature does not verify.
+
+  WHEN no prior record:
+    Accept (always).
+
+  WHEN prior record.
+    Compare key-state of the update’s verified signature against key-state of prior record’s verified signature.
+
+    Accept IF update’s key-state appears later in KEL than prior record’s key-state.
+    Accept IF update’s and prior record’s key-states appear at same location in KEL AND
+              update’s date-time is later than prior record’s date-time.
+</pre><a href="#section-3.1.2-2" class="pilcrow">¶</a>
+</div>
+</section>
+</div>
 </section>
 </div>
 <div id="run-off-the-crud">
