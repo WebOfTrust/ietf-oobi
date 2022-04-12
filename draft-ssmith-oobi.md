@@ -199,16 +199,17 @@ and concretely,
 ("http://8.8.5.6:8080/oobi", "EaU6JR2nmwyZ-i0d8JZAoTNZH3ULvYAfSVPzhzS6b5CM")
 ~~~
 
-An OOBI itself is not signed or otherwise authenticatable by KERI but may employ some other Out-Of-Band-Authentication (OOBA) mechanism (non-KERI).
+An OOBI itself is not signed or otherwise authenticatable by KERI but may employ some other Out-Of-Band-Authentication (OOBA) mechanism i.e. non-KERI.
 
-The OOBI is intentionally simplistic to enable very low byte count introductions such as a QR code or Data matrix or the like {{QR}}{{DM}}. 
+The OOBI is intentionally simplistic to enable very low byte count introductions such as a may be conveyed by a QR code or Data matrix {{QR}}{{DM}}. 
 
 
 # BADA (Best-Available-Data-Acceptance) Policy
 
-A recipient of an OOBI verifies the OOBI by authenticating the endpoint URL in the OOBI with respect to an authorization signed by the controller of the AID in the OOBI. This authorization follows the BADA policy or rules. This authorization is usually obtained by querying the OOBI URL. The service endpoint at the URL responds with a resource that contains the supporting BADA reply messages that are KERI authenticatable. 
+A recipient of an OOBI verifies the OOBI by authenticating the endpoint URL from the OOBI with respect to an authorization signed by the controller of the AID from the OOBI. This authorization follows the BADA policy. This authorization is usually obtained as a resource in reply to a query to the OOBI URL. Specifically, the service endpoint at the URL responds with a resource that contains the supporting reply messages that are KERI authenticatable. 
 
-Everything is signed. Primary attack against signed data is a replay attack.
+KERI follows a "zero-trust" security mode. In KERI everything (all data) is signed both in motion and at rest. The primary attack against signed data is a replay attack.
+
 Replay Attack. Replay of Authenticated (signed) Data
 TEL (ACDC) VDR  Issue Revoke  (kel anchored tel events) Heavyweight Non TEL based. Best Available Data Model (BADA)
 KEL anchored ordered data 
@@ -254,10 +255,12 @@ Use IP addresses (128.187.16.184) for communication
 
 ## BADA Rules
 
+The BADA (Best-Available-Data-Acceptance) rules apply to any data item stored in a database record whose value is used for some defined purpose. Updates are sourced from the controller of an associated AID. The primary purpose of BADA policy is to enforce monotonicity of the updates with respect to the key state of that associated AID. This primarily protects against non-monotonic replay attacks on the database record. For example, a rollback to an earlier value via replay of an earlier update. An *Update* or change to the database record is *accepted* when it follows the BADA rules (policy) for acceptance. There are two different mechanisms for an AID to authorize updates to a given database record. The first is by including a reference to the update in the KEL of the authorizing AID. All entries in a KEL must be signed by the current signing key-pair(s) given by the key-state for that KEL. The second is by signing a date-time stamped update. In this case, the update includes a reference to the key-state in the authorizing AID's KEL from which the signing key-pair(s) needed to verify the signature is obtained. The rules differ for each of the two mechanisms. 
+
 
 ### KEL Anchored Updates
 
-The Update is included in or anchored to AID’s key-state in KEL.
+The Update is included in or anchored to AID’s key-state in KEL. In either case the Update is referenced in an event in the KEL of the AID. By virtue of the reference, the Controller of that KEL's AID is authorizing that Update.
 
 ~~~
 Rules for Acceptance of update:  (in order of priority)
@@ -273,7 +276,6 @@ Rules for Acceptance of update:  (in order of priority)
 The Update is signed by AID, but the update itself is not included in or anchored to AID’s KEL.
 1. Ephemeral AID whose key-state is fixed (no KEL needed)
 2. Persistent AID whose key-state is provided by KEL  
-
 
 ~~~
 Rules for Acceptance of update:
