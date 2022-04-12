@@ -4,8 +4,8 @@
 
 WG Working Group                                             S. M. Smith
 Internet-Draft                                             ProSapien LLC
-Intended status: Informational                             11 April 2022
-Expires: 13 October 2022
+Intended status: Informational                             12 April 2022
+Expires: 14 October 2022
 
 
                 Out-Of-Band-Introduction (OOBI) Protocol
@@ -70,7 +70,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 13 October 2022.
+   This Internet-Draft will expire on 14 October 2022.
 
 Copyright Notice
 
@@ -169,24 +169,28 @@ Table of Contents
 
    An OOBI itself is not signed or otherwise authenticatable by KERI but
    may employ some other Out-Of-Band-Authentication (OOBA) mechanism
-   (non-KERI).
+   i.e. non-KERI.
 
    The OOBI is intentionally simplistic to enable very low byte count
-   introductions such as a QR code or Data matrix or the like [QR][DM].
+   introductions such as a may be conveyed by a QR code or Data matrix
+   [QR][DM].
 
 3.  BADA (Best-Available-Data-Acceptance) Policy
 
    A recipient of an OOBI verifies the OOBI by authenticating the
-   endpoint URL in the OOBI with respect to an authorization signed by
-   the controller of the AID in the OOBI.  This authorization follows
-   the BADA policy or rules.  This authorization is usually obtained by
-   querying the OOBI URL.  The service endpoint at the URL responds with
-   a resource that contains the supporting BADA reply messages that are
-   KERI authenticatable.
+   endpoint URL from the OOBI with respect to an authorization signed by
+   the controller of the AID from the OOBI.  This authorization follows
+   the BADA policy.  This authorization is usually obtained as a
+   resource in reply to a query to the OOBI URL.  Specifically, the
+   service endpoint at the URL responds with a resource that contains
+   the supporting reply messages that are KERI authenticatable.
 
-   Everything is signed.  Primary attack against signed data is a replay
-   attack.  Replay Attack.  Replay of Authenticated (signed) Data TEL
-   (ACDC) VDR  Issue Revoke  (kel anchored tel events) Heavyweight
+   KERI follows a "zero-trust" security mode.  In KERI everything (all
+   data) is signed both in motion and at rest.  The primary attack
+   against signed data is a replay attack.
+
+   Replay Attack.  Replay of Authenticated (signed) Data TEL (ACDC) VDR 
+   Issue Revoke  (kel anchored tel events) Heavyweight
    Non TEL based.  Best Available Data Model (BADA) KEL anchored ordered
    data KeyState-DateTime of signature ordered data.  Deletion Attack
    Total erasure a security problem  (GDPR flaw) Once erased any stale
@@ -218,9 +222,31 @@ Table of Contents
 
 3.1.  BADA Rules
 
+   The BADA (Best-Available-Data-Acceptance) rules apply to any data
+   item stored in a database record whose value is used for some defined
+   purpose.  Updates are sourced from the controller of an associated
+   AID.  The primary purpose of BADA policy is to enforce monotonicity
+   of the updates with respect to the key state of that associated AID.
+   This primarily protects against non-monotonic replay attacks on the
+   database record.  For example, a rollback to an earlier value via
+   replay of an earlier update.  An _Update_ or change to the database
+   record is _accepted_ when it follows the BADA rules (policy) for
+   acceptance.  There are two different mechanisms for an AID to
+   authorize updates to a given database record.  The first is by
+   including a reference to the update in the KEL of the authorizing
+   AID.  All entries in a KEL must be signed by the current signing key-
+   pair(s) given by the key-state for that KEL.  The second is by
+   signing a date-time stamped update.  In this case, the update
+   includes a reference to the key-state in the authorizing AID's KEL
+   from which the signing key-pair(s) needed to verify the signature is
+   obtained.  The rules differ for each of the two mechanisms.
+
 3.1.1.  KEL Anchored Updates
 
-   The Update is included in or anchored to AID's key-state in KEL.
+   The Update is included in or anchored to AID's key-state in KEL.  In
+   either case the Update is referenced in an event in the KEL of the
+   AID.  By virtue of the reference, the Controller of that KEL's AID is
+   authorizing that Update.
 
 Rules for Acceptance of update:  (in order of priority)
   Confirm Update is anchored in AID's KEL.

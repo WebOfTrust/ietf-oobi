@@ -1017,7 +1017,7 @@ svg [stroke="fill"], svg [fill^="#fff"] {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Smith</td>
-<td class="center">Expires 13 October 2022</td>
+<td class="center">Expires 14 October 2022</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1030,12 +1030,12 @@ svg [stroke="fill"], svg [fill^="#fff"] {
 <dd class="internet-draft">draft-ssmith-oobi-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2022-04-11" class="published">11 April 2022</time>
+<time datetime="2022-04-12" class="published">12 April 2022</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2022-10-13">13 October 2022</time></dd>
+<dd class="expires"><time datetime="2022-10-14">14 October 2022</time></dd>
 <dt class="label-authors">Author:</dt>
 <dd class="authors">
 <div class="author">
@@ -1084,7 +1084,7 @@ svg [stroke="fill"], svg [fill^="#fff"] {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 13 October 2022.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 14 October 2022.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1247,8 +1247,8 @@ svg [stroke="fill"], svg [fill^="#fff"] {
 ("http://8.8.5.6:8080/oobi", "EaU6JR2nmwyZ-i0d8JZAoTNZH3ULvYAfSVPzhzS6b5CM")
 </pre><a href="#section-2-4" class="pilcrow">¶</a>
 </div>
-<p id="section-2-5">An OOBI itself is not signed or otherwise authenticatable by KERI but may employ some other Out-Of-Band-Authentication (OOBA) mechanism (non-KERI).<a href="#section-2-5" class="pilcrow">¶</a></p>
-<p id="section-2-6">The OOBI is intentionally simplistic to enable very low byte count introductions such as a QR code or Data matrix or the like <span>[<a href="#QR" class="xref">QR</a>]</span><span>[<a href="#DM" class="xref">DM</a>]</span>.<a href="#section-2-6" class="pilcrow">¶</a></p>
+<p id="section-2-5">An OOBI itself is not signed or otherwise authenticatable by KERI but may employ some other Out-Of-Band-Authentication (OOBA) mechanism i.e. non-KERI.<a href="#section-2-5" class="pilcrow">¶</a></p>
+<p id="section-2-6">The OOBI is intentionally simplistic to enable very low byte count introductions such as a may be conveyed by a QR code or Data matrix <span>[<a href="#QR" class="xref">QR</a>]</span><span>[<a href="#DM" class="xref">DM</a>]</span>.<a href="#section-2-6" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="bada-best-available-data-acceptance-policy">
@@ -1256,17 +1256,17 @@ svg [stroke="fill"], svg [fill^="#fff"] {
       <h2 id="name-bada-best-available-data-ac">
 <a href="#section-3" class="section-number selfRef">3. </a><a href="#name-bada-best-available-data-ac" class="section-name selfRef">BADA (Best-Available-Data-Acceptance) Policy</a>
       </h2>
-<p id="section-3-1">A recipient of an OOBI verifies the OOBI by authenticating the endpoint URL in the OOBI with respect to an authorization signed by the controller of the AID in the OOBI. This authorization follows the BADA policy or rules. This authorization is usually obtained by querying the OOBI URL. The service endpoint at the URL responds with a resource that contains the supporting BADA reply messages that are KERI authenticatable.<a href="#section-3-1" class="pilcrow">¶</a></p>
-<p id="section-3-2">Everything is signed. Primary attack against signed data is a replay attack.
-Replay Attack. Replay of Authenticated (signed) Data
+<p id="section-3-1">A recipient of an OOBI verifies the OOBI by authenticating the endpoint URL from the OOBI with respect to an authorization signed by the controller of the AID from the OOBI. This authorization follows the BADA policy. This authorization is usually obtained as a resource in reply to a query to the OOBI URL. Specifically, the service endpoint at the URL responds with a resource that contains the supporting reply messages that are KERI authenticatable.<a href="#section-3-1" class="pilcrow">¶</a></p>
+<p id="section-3-2">KERI follows a "zero-trust" security mode. In KERI everything (all data) is signed both in motion and at rest. The primary attack against signed data is a replay attack.<a href="#section-3-2" class="pilcrow">¶</a></p>
+<p id="section-3-3">Replay Attack. Replay of Authenticated (signed) Data
 TEL (ACDC) VDR  Issue Revoke  (kel anchored tel events) Heavyweight<br>Non TEL based. Best Available Data Model (BADA)
 KEL anchored ordered data 
 KeyState-DateTime of signature ordered data.
 Deletion Attack
 Total erasure a security problem  (GDPR flaw)
 Once erased any stale authenticated data acting as authorization may be replayed without detection.
-Mitigation for Deletion attack are redundant signed copies (eventually consistent DB)<a href="#section-3-2" class="pilcrow">¶</a></p>
-<p id="section-3-3">Authentic Data
+Mitigation for Deletion attack are redundant signed copies (eventually consistent DB)<a href="#section-3-3" class="pilcrow">¶</a></p>
+<p id="section-3-4">Authentic Data
     Two primary attacks.
 Replay attack.
   Mitigation. Monotonicity 
@@ -1277,8 +1277,8 @@ Interactive.
 Nonce
 Non-interactive.
 Memory (sequence number, date-time stamp, nullification)
-More scalable<a href="#section-3-3" class="pilcrow">¶</a></p>
-<p id="section-3-4">Zero Trust Percolated Discovery
+More scalable<a href="#section-3-4" class="pilcrow">¶</a></p>
+<p id="section-3-5">Zero Trust Percolated Discovery
 Primary Discovery Data are Endpoints of KERI Components:
 Controllers, Agents, Backers (Witness, Registrar), Watchers, Jurors, Judges, Forwarders
 Endpoint is URL IP Scheme, Host, Port, Path etc
@@ -1290,23 +1290,24 @@ Role is purpose or function such as Watcher
 Zero Trust Data as  Authorization in context of KERI KeyState
 ACDC Issue Revoke Reissue model
 RUN model (Read, Update, Nullify) 
-Anchored or Signed with replay and deletion attack protection<a href="#section-3-4" class="pilcrow">¶</a></p>
-<p id="section-3-5">Minimally Sufficient Means
+Anchored or Signed with replay and deletion attack protection<a href="#section-3-5" class="pilcrow">¶</a></p>
+<p id="section-3-6">Minimally Sufficient Means
 Leverage existing internet but safely, with end-verifiability
 Internet DNS/CA is out-of-band w.r.t. KERI security
 Use DSN/CA for out-of-band introductions w.r.t. KERI only, not authentication
-Use IP addresses (128.187.16.184) for communication<a href="#section-3-5" class="pilcrow">¶</a></p>
+Use IP addresses (128.187.16.184) for communication<a href="#section-3-6" class="pilcrow">¶</a></p>
 <div id="bada-rules">
 <section id="section-3.1">
         <h3 id="name-bada-rules">
 <a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-bada-rules" class="section-name selfRef">BADA Rules</a>
         </h3>
+<p id="section-3.1-1">The BADA (Best-Available-Data-Acceptance) rules apply to any data item stored in a database record whose value is used for some defined purpose. Updates are sourced from the controller of an associated AID. The primary purpose of BADA policy is to enforce monotonicity of the updates with respect to the key state of that associated AID. This primarily protects against non-monotonic replay attacks on the database record. For example, a rollback to an earlier value via replay of an earlier update. An <em>Update</em> or change to the database record is <em>accepted</em> when it follows the BADA rules (policy) for acceptance. There are two different mechanisms for an AID to authorize updates to a given database record. The first is by including a reference to the update in the KEL of the authorizing AID. All entries in a KEL must be signed by the current signing key-pair(s) given by the key-state for that KEL. The second is by signing a date-time stamped update. In this case, the update includes a reference to the key-state in the authorizing AID's KEL from which the signing key-pair(s) needed to verify the signature is obtained. The rules differ for each of the two mechanisms.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
 <div id="kel-anchored-updates">
 <section id="section-3.1.1">
           <h4 id="name-kel-anchored-updates">
 <a href="#section-3.1.1" class="section-number selfRef">3.1.1. </a><a href="#name-kel-anchored-updates" class="section-name selfRef">KEL Anchored Updates</a>
           </h4>
-<p id="section-3.1.1-1">The Update is included in or anchored to AID's key-state in KEL.<a href="#section-3.1.1-1" class="pilcrow">¶</a></p>
+<p id="section-3.1.1-1">The Update is included in or anchored to AID's key-state in KEL. In either case the Update is referenced in an event in the KEL of the AID. By virtue of the reference, the Controller of that KEL's AID is authorizing that Update.<a href="#section-3.1.1-1" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-3.1.1-2">
 <pre>
 Rules for Acceptance of update:  (in order of priority)
