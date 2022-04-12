@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2022-04-10T00:25:45.729782+00:00",
+  "timestamp": "2022-04-12T00:28:13.413961+00:00",
   "repo": "WebOfTrust/ietf-oobi",
   "labels": [
     {
@@ -243,6 +243,90 @@
       "mergedBy": "SmithSamuelM",
       "mergeCommit": {
         "oid": "7fa3577303bef7c84b3cec59baa6091928666f23"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 8,
+      "id": "PR_kwDOHIiMYM42BTir",
+      "title": "added BADA basic stuff",
+      "url": "https://github.com/WebOfTrust/ietf-oobi/pull/8",
+      "state": "MERGED",
+      "author": "SmithSamuelM",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2022-04-11T18:02:21Z",
+      "updatedAt": "2022-04-11T18:03:12Z",
+      "baseRepository": "WebOfTrust/ietf-oobi",
+      "baseRefName": "main",
+      "baseRefOid": "7fa3577303bef7c84b3cec59baa6091928666f23",
+      "headRepository": "SmithSamuelM/ietf-oobi",
+      "headRefName": "main",
+      "headRefOid": "58a7d79c375bf8f371a7f4fede9dc046fbc717c9",
+      "closedAt": "2022-04-11T18:03:12Z",
+      "mergedAt": "2022-04-11T18:03:12Z",
+      "mergedBy": "SmithSamuelM",
+      "mergeCommit": {
+        "oid": "6866dc4893e4c7e061af75f05dbfc640614d673d"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 9,
+      "id": "PR_kwDOHIiMYM42BU0P",
+      "title": "Update README.md",
+      "url": "https://github.com/WebOfTrust/ietf-oobi/pull/9",
+      "state": "MERGED",
+      "author": "SmithSamuelM",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2022-04-11T18:07:40Z",
+      "updatedAt": "2022-04-11T18:07:49Z",
+      "baseRepository": "WebOfTrust/ietf-oobi",
+      "baseRefName": "main",
+      "baseRefOid": "6866dc4893e4c7e061af75f05dbfc640614d673d",
+      "headRepository": "SmithSamuelM/ietf-oobi",
+      "headRefName": "main",
+      "headRefOid": "b2977b8d59189427eadaf8fde16118c56a26ad22",
+      "closedAt": "2022-04-11T18:07:49Z",
+      "mergedAt": "2022-04-11T18:07:49Z",
+      "mergedBy": "SmithSamuelM",
+      "mergeCommit": {
+        "oid": "436fd7daf7a81624431422ff27926695d72c1ecd"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 10,
+      "id": "PR_kwDOHIiMYM42BfEk",
+      "title": "Update BADA rule formatting",
+      "url": "https://github.com/WebOfTrust/ietf-oobi/pull/10",
+      "state": "MERGED",
+      "author": "SmithSamuelM",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2022-04-11T18:51:51Z",
+      "updatedAt": "2022-04-11T18:52:34Z",
+      "baseRepository": "WebOfTrust/ietf-oobi",
+      "baseRefName": "main",
+      "baseRefOid": "436fd7daf7a81624431422ff27926695d72c1ecd",
+      "headRepository": "SmithSamuelM/ietf-oobi",
+      "headRefName": "main",
+      "headRefOid": "4e826fe2de3094fa031f7294377c889f20059e9f",
+      "closedAt": "2022-04-11T18:52:34Z",
+      "mergedAt": "2022-04-11T18:52:34Z",
+      "mergedBy": "SmithSamuelM",
+      "mergeCommit": {
+        "oid": "e996704530ae78d58fc77ed3374f89051a9b0471"
       },
       "comments": [],
       "reviews": []
