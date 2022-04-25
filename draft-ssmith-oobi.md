@@ -169,25 +169,31 @@ informative:
     target: https://en.wikipedia.org/wiki/Data_Matrix
     title: Data Matrix
     
+  RTE:
+    target: https://gdpr-info.eu/art-17-gdpr/
+    title: GDPR Right to Erasure
+    
 
 --- abstract
 
-An Out-Of-Band Introduction (OOBI) provides a discovery mechanism that associates a given URI or URL with a given AID (Autonomic IDentifier) or SAID (Self-Addressing IDentifier) {{KERI_ID}}{{KERI}}{{SAID_ID}}{{OOBI_ID}}. The URI provided by an OOBI acts as a service endpoint for the discovery of verifiable information about the AID or SAID. As such an OOBI itself is not trusted but must be verified. To clarify, any information obtained from the service endpoint provided in the OOBI must be verified by some other mechanism. An OOBI, however, enables any internet and web search infrastructure to act as out-of-band infrastructure to discover information that is verified using an in-band mechanism or protocol. The primary in-band verification protocol is KERI {{KERI_ID}}{{KERI}}. The OOBI protocol provides a web-based bootstrap and/or discovery mechanism for the KERI and the ACDC (Authentic Chained Data Container) protocols {{KERI_ID}}{{ACDC_ID}}{{OOBI_ID}}. Thus the security (or more correctly the lack of security) of an OOBI is out-of-band with respect to a KERI AID or an ACDC that uses KERI. To clarify, everything in KERI or that depends on KERI is end-verifiable, therefore it has no security dependency nor does it rely on security guarantees that may or may not be provided by web or internet infrastructure.  OOBIs provide a bootstrap that enables what we call Percolated Information Discovery (PID) which is based on Invasion Percolation Theory {{IPT}}{{DOMIP}{{PT}}{{FPP}}. This bootstrap may then be parlayed into a secure mechanism for accepting and updating data. The principal data acceptance and update policy is denoted BADA (Best-Available-Data-Acceptance).
+An Out-Of-Band Introduction (OOBI) provides a discovery mechanism that associates a given URI or URL with a given AID (Autonomic IDentifier) or SAID (Self-Addressing IDentifier) {{KERI_ID}}{{KERI}}{{SAID_ID}}{{OOBI_ID}}. The URI provided by an OOBI acts as a service endpoint for the discovery of verifiable information about the AID or SAID. As such an OOBI itself is not trusted but must be verified. To clarify, any information obtained from the service endpoint provided in the OOBI must be verified by some other mechanism. An OOBI, however, enables any internet and web search infrastructure to act as an out-of-band infrastructure to discover information that is verified using an in-band mechanism or protocol. The primary in-band verification protocol is KERI {{KERI_ID}}{{KERI}}. The OOBI protocol provides a web-based bootstrap and/or discovery mechanism for the KERI and the ACDC (Authentic Chained Data Container) protocols {{KERI_ID}}{{ACDC_ID}}{{OOBI_ID}}. Thus the security (or more correctly the lack of security) of an OOBI is out-of-band with respect to a KERI AID or an ACDC that uses KERI. To clarify, everything in KERI or that depends on KERI is end-verifiable, therefore it has no security dependency nor does it rely on security guarantees that may or may not be provided by web or internet infrastructure.  OOBIs provide a bootstrap that enables what we call Percolated Information Discovery (PID) which is based on Invasion Percolation Theory {{IPT}}{{DOMIP}{{PT}}{{FPP}}. This bootstrap may then be parlayed into a secure mechanism for accepting and updating data. The principal data acceptance and update policy is denoted BADA (Best-Available-Data-Acceptance).
 
 
 --- middle
 
 # Introduction
 
-Vacuous discovery of IP resources such as service endpoints associated with a KERI AID (Autonomic IDentifier) or SAID (Self-Addressing IDentifier) requires an Out-Of-Band Introduction (OOBI) to associate a given URL with a given AID or SAID {{KERI_ID}}{{KERI}}{{SAID_ID}}{{OOBI_ID}}{{URL}}. The principal reason for this requirement is that KERI AIDs are derived in a completely decentralized manner. The root-of-trust of a KERI AID is completely independent of internet and DNS addressing infrastructure. Thus an IP address or URL could be considered a type of Out-Of-Band Infrastructure (OOBI) for KERI.  In this context, an introduction is an association between a KERI AID and a URL that may include either an explicit IP address or a DNS name for its host {{RFC3986}}{{URL}}. We call this a KERI OOBI (Out-Of-Band-Introduction) and is a special case of Out-Of-Band-Infrastructure (OOBI) with a shared acronym. For the sake of clarity, unless otherwise qualified, OOBI is used to mean this special case of an introduction and not the general case of infrastructure.
+Vacuous discovery of IP resources such as service endpoints associated with a KERI AID (Autonomic IDentifier) or SAID (Self-Addressing IDentifier) requires an Out-Of-Band Introduction (OOBI) to associate a given URL with a given AID (Autonomic IDentifier) or SAID (Self-Addressing IDentifier) {{KERI_ID}}{{KERI}}{{SAID_ID}}{{OOBI_ID}}{{URL}}. The principal reason for this requirement is that KERI AIDs are derived in a completely decentralized manner. The root-of-trust of a KERI AID is completely independent of internet and DNS addressing infrastructure. Thus an IP address or URL could be considered a type of Out-Of-Band Infrastructure (OOBI) for KERI.  In this context, an introduction is an association between a KERI AID and a URL that may include either an explicit IP address or a DNS name for its host {{RFC3986}}{{URL}}. We call this a KERI OOBI (Out-Of-Band-Introduction) and is a special case of Out-Of-Band-Infrastructure (OOBI) with a shared acronym. For the sake of clarity, unless otherwise qualified, OOBI is used to mean this special case of an *introduction* and not the general case of *infrastructure*.
 
 Moreover, because IP infrastructure is not trusted by KERI, a KERI OOBI by itself is considered insecure with respect to KERI, and any OOBI must therefore be later verified using a KERI BADA (Best-Available-Data-Acceptance) mechanism. The principal use case for an OOBI is to jump-start the discovery of a service endpoint for a given AID. To reiterate, the OOBI by itself is not sufficient for discovery because the OOBI itself is insecure. The OOBI merely jump-starts authenticated discovery.  
 
 Using IP and DNS infrastructure to introduce KERI AIDs which AIDs are then securely attributed allows KERI to leverage IP and DNS infrastructure for discovery. KERI does not, therefore, need its own dedicated discovery network, OOBIs with URLs will do.
 
+A secondary use case for OOBI's is to provide service endpoints or URIs for SAD (Self-Addressed Data) items identifier by their SAID (Self-Addressing IDentifier). A SAID is a content address derived from a cryptographic digest of the serialization of a data item. The SAID protocol provides a derivation process where the SAID is actually included in the SAD. This makes a SAID self-referential. Verification of a SAD resource obtained by querying a URI that includes the SAD's SAID is accomplished by simply re-deriving the SAID of the SAD in the reply and comparing it to the SAID in the URI. The `sad` URI scheme may be simply expressed as `sad:said` where *said* is replaced with the actual SAID of the referenced SAD item. The mime-type of the returned SAD is determined by the serialization type such as JSON or CBOR for example.
+
 # Basic OOBI
 
-The simplest form of a KERI  OOBI is a namespaced string, a tuple, a mapping, a structured message, or a structured attachment that contains both a KERI AID and a URL. The OOBI associates the URL with the AID. In tuple form this abstractly,
+The simplest form of a KERI  OOBI is a namespaced string, a tuple, a mapping, a structured message, or a structured attachment that contains both a KERI AID and a URL (or URI). The OOBI associates the URL with the AID. By convention the URL typically include the word `oobi` in its path to indicate that it is to be used as an OOBI but this is not required. In tuple form this abstractly,
 
 ~~~python
 (url, aid)
@@ -206,34 +212,75 @@ The OOBI is intentionally simplistic to enable very low byte count introductions
 
 # BADA (Best-Available-Data-Acceptance) Policy
 
-A recipient of an OOBI verifies the OOBI by authenticating the endpoint URL from the OOBI with respect to an authorization signed by the controller of the AID from the OOBI. This authorization follows the BADA policy. This authorization is usually obtained as a resource in reply to a query to the OOBI URL. Specifically, the service endpoint at the URL responds with a resource that contains the supporting reply messages that are KERI authenticatable. 
+The recipient of an OOBI verifies the OOBI by authenticating the endpoint URL given by the OOBI with respect to an authorization signed by the controller of the AID given by the OOBI. This authorization follows the BADA (Best Available Data Acceptance) policy. The BADA policy provides monotonicity for updates to authentically signed data at rest. This follows best practices for zero-trust computing infrastructure for authentic data. The authorization is usually obtained as a resource in reply to a query to the OOBI URL. Specifically, the service endpoint at the URL responds with a resource that contains the supporting reply messages that are KERI authenticatable. 
 
-KERI follows a "zero-trust" security mode. In KERI everything (all data) is signed both in motion and at rest. The primary attack against signed data is a replay attack.
+## Security Issues
 
-Replay Attack. Replay of Authenticated (signed) Data
-TEL (ACDC) VDR  Issue Revoke  (kel anchored tel events) Heavyweight Non TEL based. Best Available Data Model (BADA)
-KEL anchored ordered data 
-KeyState-DateTime of signature ordered data.
-Deletion Attack
-Total erasure a security problem  (GDPR flaw)
-Once erased any stale authenticated data acting as authorization may be replayed without detection.
-Mitigation for Deletion attack are redundant signed copies (eventually consistent DB)
+KERI follows a "zero-trust" security model for authentic or securely attributable data. That means that data is signed both in motion and at rest. The primary attack against signed data is a replay attack. In a replay attack, an adversary obtains a copy of data with a verifiable signature and then replays it later. Without some other information, it is difficult for a host to detect that it is indeed a replay or malicious reuse of signed data and not the original use of that data.
+
+To elaborate, there are two primary types of attacks on authentic or authenticatable data-at-rest. The first is a replay attack. The second is a deletion attack. In a replay attack, an adversary keeps a copy of an authentic message or data together with its verifiable signature that has already been created and used by the controller of a KERI AID and then sometime later replays that same message with the signature. A verifier may thereby be fooled into believing that the replay is actually a new message and not a stale message. There are both interactive and non-interactive mitigations to replay attacks. Interactive mitigations use some type of nonce exchanged between updater and updatee. The nonce exchange introduces latency, scalability, and synchronization limitations. Non-interactive mitigations require a monotonic ordering mechanism. Typically monotonic ordering is based on logic rooted in a sequence number or date-time stamp. Because non-interactive mitigations are asynchronous, however, they do not have the latency and scalability limitations of interactive mitigations and are therefore preferred.
+
+The KEL (Key Event Log) of a KERI AID provides such a monotonic ordering mechanism as it employs both a sequence number and digest chaining. For authentic data directly anchored to or determined by a KEL, the relative KEL location determines the monotonic order. This ordering determination includes TEL (Transaction Event Logs) which are monotonically ordered with respect to anchoring seals in the associated KEL {{PTEL_ID}}.  For authentic data not directly anchored or included in a KEL, the relative key state (which is determined by the KEL) may be used in combination with a date-time stamp to ensure monotonic ordering. Finally, for any AID whose key state is fixed, a date-time stamp may be used with appropriate update logic to ensure monotonic ordering. The logic that ensures monotonic ordering is called BADA (Best Available Data Acceptance) and is described later in this section.
+
+A deletion attack is related to a replay attack. Once erased or deleted, a verifier may not be able to detect a replay attack of the deleted data because it has lost a record of the prior play to compare against. To elaborate, once erased, any stale authenticated data acting as authorization may be replayed without detection. This exposes a problem with the GPDR right-to-erasure, which if naively implemented as total erasure, exposes the data controller to a replay attack of erased data. 
+
+The primary mitigation mechanism for deletion attacks is to maintain redundant copies of the signed authentic data. As long as one of the redundant copies has not been deleted then a comparison between the hosts of the redundant copies will expose the deletion attack given there is at least one undeleted copy. The monotonicity of the data is preserved in each copy. The host need merely compare copies. Only the current data item needs to be kept in full in order to support the use of that data.  For protection against replay attacks using stale data, only copies of the digest or signature of the data need to be kept. To reiterate, a replay attack can be detected by comparing the digest or signature (which is a type of digest) of any undeleted copy with the presented data. 
+
+To summarize, authentic data at rest consists of the data item and signature(s). The two primary attacks are replay and deletion. Replay attack mitigation relies on replay monotonicity in data updates. Deletion attack mitigation relies on the redundancy of monotonic data.
+
+## BADA Rules
+
+The BADA (Best-Available-Data-Acceptance) rules apply to any data item stored in a database record whose value is used for some defined purpose. Updates are sourced from the controller of an associated KERI AID. The primary purpose of BADA policy is to enforce monotonicity of the updates with respect to the key state of that associated AID. This primarily protects against replay attacks on the database record. For example, a rollback to an earlier value via replay of an earlier update. An *Update* or change to the database record is *accepted* when it follows the BADA rules (policy) for acceptance. The BADA rules ensure the monotonicity of all updates. 
+
+There are two different mechanisms for the controller of an AID to authorize updates to a given database record. The first is by including a reference to the update in the KEL of the authorizing AID. All entries in a KEL must be signed by the current signing key-pair(s) given by the key-state for that KEL. The second is by signing a date-time stamped update. In this case, the update either includes a reference to the key-state in the authorizing AID's KEL from which the signing key-pair(s) needed to verify the signature is obtained or the AID is ephemeral with a fixed key-state (has a non-transferable derivation code). The rules differ for each of the two mechanisms. 
+
+### KEL Anchored Updates
+
+The *Update* to some record is included in or anchored via a seal to the AID’s key-state in its KEL. In either case, the *Update* is referenced in an event in the KEL of the AID. By virtue of the reference, the Controller of that KEL's AID is authorizing that Update. The record may have a *Prior* value that is being updated or the *Update* serves to create the initial value of the record. *Prior* means the prior record.
+
+~~~
+Rules for the acceptance of the *Update*:  (in order of priority)
+  Confirm *Update* is anchored or included in AID's KEL.
+  
+  WHEN Update is anchored in AID's KEL AND...
+    IF no *Prior* THEN accept. (always)
+    IF *Prior* AND...
+      *Update’s* anchor appears later in KEL than the Prior’s anchor THEN accept.  
+  Otherwise, do not accept.
+~~~
+
+### Signed (Not Anchored) Updates
+
+The *Update* to some record is signed by the controller of the AID, but the *Update* itself is NOT included in or anchored to the AID’s KEL. The record may have a *Prior* value that is being updated or the *Update* serves to create the initial value of the record. *Prior* means the prior record. All date-times are relative to the controller's date-time, NOT the database host's date-time.
+There are two cases. These are as follows.
+
+1. Ephemeral AID whose key-state is fixed (no KEL needed)
+2. Persistent AID whose key-state is provided by KEL  
+
+~~~
+Rules for the acceptance of the *Update*:  (in order of priority)
+  Confirm signature on the *Update* verifies against indicated key-state under which signature was made.
+  
+  WHEN signature verifies AND...
+    IF no *Prior* THEN accept (always).
+    IF *Prior* THEN ...
+      Compare the *Update’s* verified signature key-state against the *Prior's* verified signature key-state.
+      IF the *Update’s* key-state appears later in KEL than the *Prior's* key-state THEN accept.
+      IF both the *Update’s* and the *Prior's* key-states appear at the same location in KEL AND...
+              *Update’s* date-time is later than the *Prior's* date-time THEN accept.           
+  Otherwise, do not accept.
+~~~
+
+                    
+## RUN off the CRUD  
+
+In the conventional client-server database architecture, the database server is responsible for creating records on the behalf of clients and assigning unique identifiers for each record. The server returns to the client the unique record identifier when it creates a record. The server is the source of truth.  But in a zero-trust (end-verifiable) decentralized peer-to-peer architecture, there is no client/server. Every host is a Peer. Each Peer is the source of truth for its own data. Therefore each Peer MUST be able to create unique identifiers for its own data. This inverts the architecture because each Peer creates a unique identifier for each of its own data items and sends that identifier with the data item to the other Peers. Each peer is storing data on the behalf of the other peers. This inverted architecture enables consistent authentic data update policies that work asynchronously across multiple Peers and are replay and deletion attack resistant. Each Peer has an end-verifiable (via signature) monotonically updated view of the data records sourced from the other Peers.
+
+The acronym for the traditional client-server database update policy is CRUD (Create, Read, Update, Delete). The acronym for the new peer-to-peer end-verifiable monotonic update policy is RUN (Read, Update, Nullify). As described above, because the source of truth for each data item is a decentralized controller Peer, a given database hosted by any Peer does not *create* records in the traditional sense of a server creating records for a client. The hosting Peer merely stores a copy of an Update sent out by the source Peer (controller). Thus there is no Create only Update. To clarify, a source Peer updates other Peers. Moreover, non-interactive monotonic update logic that is replay and deletion attack resistant means that a hosting Peer MUST NOT ever delete a record storing the latest version of an Update. Thus there is no Delete. Instead of Delete, Peers Nullify. A Nullify is a special type of Update that indicates that the data in the record is no longer valid without erasing the record that includes a reference to the latest monotonic determining anchor and/or date-time. There are two ways to indicate Nullification. The first is to assign a `null` value to the record. This works for single field records. The second is to assign a Boolean logic flag field that indicates the record has been Nullified. This works for multi-field records.
 
 
-Authentic Data
-    Two primary attacks.
-Replay attack.
-  Mitigation. Monotonicity 
-Deletion attack.
-    Mitigation. Redundancy
-Replay Monotonicity.
-Interactive.
-Nonce
-Non-interactive.
-Memory (sequence number, date-time stamp, nullification)
-More scalable  
+## Authorized Endpoint Disclosure 
 
-Zero Trust Percolated Discovery
 Primary Discovery Data are Endpoints of KERI Components:
 Controllers, Agents, Backers (Witness, Registrar), Watchers, Jurors, Judges, Forwarders
 Endpoint is URL IP Scheme, Host, Port, Path etc
@@ -244,6 +291,8 @@ Player is AID of Component Controller
 Role is purpose or function such as Watcher
 Zero Trust Data as  Authorization in context of KERI KeyState
 ACDC Issue Revoke Reissue model
+
+
 RUN model (Read, Update, Nullify) 
 Anchored or Signed with replay and deletion attack protection
 
@@ -251,90 +300,44 @@ Minimally Sufficient Means
 Leverage existing internet but safely, with end-verifiability
 Internet DNS/CA is out-of-band w.r.t. KERI security
 Use DSN/CA for out-of-band introductions w.r.t. KERI only, not authentication
-Use IP addresses (128.187.16.184) for communication
+Use IP addresses (128.187.16.184) for communication 
 
-## BADA Rules
+Non-interactive.
+Memory (sequence number, date-time stamp, nullification)
+More scalable  
 
-The BADA (Best-Available-Data-Acceptance) rules apply to any data item stored in a database record whose value is used for some defined purpose. Updates are sourced from the controller of an associated AID. The primary purpose of BADA policy is to enforce monotonicity of the updates with respect to the key state of that associated AID. This primarily protects against non-monotonic replay attacks on the database record. For example, a rollback to an earlier value via replay of an earlier update. An *Update* or change to the database record is *accepted* when it follows the BADA rules (policy) for acceptance. There are two different mechanisms for an AID to authorize updates to a given database record. The first is by including a reference to the update in the KEL of the authorizing AID. All entries in a KEL must be signed by the current signing key-pair(s) given by the key-state for that KEL. The second is by signing a date-time stamped update. In this case, the update includes a reference to the key-state in the authorizing AID's KEL from which the signing key-pair(s) needed to verify the signature is obtained. The rules differ for each of the two mechanisms. 
+Zero Trust Percolated Discovery
 
+### OOBI KERI Endpoint Authorization (OKEA)
 
-### KEL Anchored Updates
-
-The Update is included in or anchored to AID’s key-state in KEL. In either case the Update is referenced in an event in the KEL of the AID. By virtue of the reference, the Controller of that KEL's AID is authorizing that Update.
-
-~~~
-Rules for Acceptance of update:  (in order of priority)
-  Confirm Update is anchored in AID's KEL.
-  WHEN no prior record.
-     Accept always. 
-  WHEN prior record. 
-     Accept IF update’s anchor appears later in KEL than prior record’s anchor.  
-~~~
-
-### Signed (Not Anchored) Updates
-
-The Update is signed by AID, but the update itself is not included in or anchored to AID’s KEL.
-1. Ephemeral AID whose key-state is fixed (no KEL needed)
-2. Persistent AID whose key-state is provided by KEL  
-
-~~~
-Rules for Acceptance of update:
-  Confirm signature on Update verifies against indicated key-state under which signature was made.
-  Do NOT accept IF signature does not verify.
-  
-  WHEN no prior record: 
-    Accept (always).
-  
-  WHEN prior record.  
-    Compare key-state of the update’s verified signature against key-state of prior record’s verified signature.
-   
-    Accept IF update’s key-state appears later in KEL than prior record’s key-state.
-    Accept IF update’s and prior record’s key-states appear at same location in KEL AND
-              update’s date-time is later than prior record’s date-time.
-~~~
-
-                     
-## RUN off the CRUD  
-
-Client-Server API or Peer-to-Peer.
-Create, Read, Update, Delete (CRUD) 
-Read, Update, Nullify (RUN)
-Decentralized control means server never creates only client. Client (Peer) updates server (other Peer) always for data sourced by Client (Peer). So no Create.
-Non-interactive monotonicity means we can’t ever delete. 
-So no Delete. We must Nullify instead. Nullify is a special type of Update.
-Ways to Nullify
-null value
-flag indicating nullified
-
-## Authorized Endpoint Disclosure  
+Example application of BADA-RUN
 
 Datetime stamped BADA authorization by CID of EID in Role (Update)
 Datetime stamped BADA deauthorization by CID of EID in Role (Nullify)
 Datetime stamped BADA authorization by EID of  URL for scheme (Update).
 Datetime stamped BADA deauthorization by EID of URL for scheme  (Nullify)  
- 
 
-
-## OOBI KERI Endpoint Authorization (OKEA)
 
 Upon acceptance of an OOBI the recipient queries the provided URL for proof that the URL is an authorized endpoint for the given AID. The proof format may depend on the actual role of the endpoint. A current witness for an AID is designated in the current key state's latest establishment event in the AID's KEL. Therefore merely replying with the Key State or KEL may serve as proof for a witness introduced by an OOBI. 
 
 Other roles are not part of key state (i.e. are not designated in KEL establishment events) and therefore must be authorized by another mechanism. This typically will be a signed /end/role/ reply message. So the query of the OOBI URL could return as proof an associated authorizing reply message. For example,
 
+Example reply message.
+
 ~~~json
 {
-          "v" : "KERI10JSON00011c_",
-          "t" : "rpy",
-          "d": "EZ-i0d8JZAoTNZH3ULaU6JR2nmwyvYAfSVPzhzS6b5CM",
-          "dt": "2020-08-22T17:50:12.988921+00:00",
-          "r" : "/end/role/add",
-          "a" :
-          {
-             "cid":  "EaU6JR2nmwyZ-i0d8JZAoTNZH3ULvYAfSVPzhzS6b5CM",
-             "role": "watcher", 
-             "eid": "BrHLayDN-mXKv62DAjFLX1_Y5yEUe0vA9YPe_ihiKYHE",
-          }
- }
+  "v" : "KERI10JSON00011c_",
+  "t" : "rpy",
+  "d": "EZ-i0d8JZAoTNZH3ULaU6JR2nmwyvYAfSVPzhzS6b5CM",
+  "dt": "2020-08-22T17:50:12.988921+00:00",
+  "r" : "/end/role/add",
+  "a" :
+  {
+     "cid":  "EaU6JR2nmwyZ-i0d8JZAoTNZH3ULvYAfSVPzhzS6b5CM",
+     "role": "watcher", 
+     "eid": "BrHLayDN-mXKv62DAjFLX1_Y5yEUe0vA9YPe_ihiKYHE",
+  }
+}
 ~~~
 
 
