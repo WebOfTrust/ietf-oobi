@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2022-04-26T00:29:42.428384+00:00",
+  "timestamp": "2022-04-28T00:37:55.594847+00:00",
   "repo": "WebOfTrust/ietf-oobi",
   "labels": [
     {
@@ -401,6 +401,32 @@
       "mergeCommit": {
         "oid": "f4a180808e1b526cea87d88f01ec3add5676a6ad"
       },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 14,
+      "id": "PR_kwDOHIiMYM424teE",
+      "title": "some typos",
+      "url": "https://github.com/WebOfTrust/ietf-oobi/pull/14",
+      "state": "OPEN",
+      "author": "SmithSamuelM",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2022-04-27T16:03:57Z",
+      "updatedAt": "2022-04-27T16:03:57Z",
+      "baseRepository": "WebOfTrust/ietf-oobi",
+      "baseRefName": "main",
+      "baseRefOid": "f4a180808e1b526cea87d88f01ec3add5676a6ad",
+      "headRepository": "SmithSamuelM/ietf-oobi",
+      "headRefName": "main",
+      "headRefOid": "f23dc9995da1f55e3c365ba073e925d829d5363b",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
       "comments": [],
       "reviews": []
     }
