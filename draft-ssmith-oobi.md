@@ -274,82 +274,103 @@ Rules for the acceptance of the *Update*:  (in order of priority)
                     
 ## RUN off the CRUD  
 
-In the conventional client-server database architecture, the database server is responsible for creating records on the behalf of clients and assigning unique identifiers for each record. The server returns to the client the unique record identifier when it creates a record. The server is the source of truth.  But in a zero-trust (end-verifiable) decentralized peer-to-peer architecture, there is no client/server. Every host is a Peer. Each Peer is the source of truth for its own data. Therefore each Peer MUST be able to create unique identifiers for its own data. This inverts the architecture because each Peer creates a unique identifier for each of its own data items and sends that identifier with the data item to the other Peers. Each peer is storing data on the behalf of the other peers. This inverted architecture enables consistent authentic data update policies that work asynchronously across multiple Peers and are replay and deletion attack resistant. Each Peer has an end-verifiable (via signature) monotonically updated view of the data records sourced from the other Peers.
+In the conventional client-server database architecture, the database server is responsible for creating records on the behalf of clients and assigning unique identifiers for each record. The server returns to the client the unique record identifier when it creates a record. The server is the source of truth.  But in a zero-trust (end-verifiable) decentralized peer-to-peer architecture, there is no client/server. Every host is a Peer. Each Peer is the source of truth for its own data. Therefore each Peer is responsible for managing its own records. Each Peer MUST be able to create unique identifiers for its own data. This inverts the architecture because each Peer creates a unique identifier for each of its own data items and sends that identifier with the data item to the other Peers. Each Peer stores data on the behalf of the other Peers. This inverted architecture enables consistent authentic data update policies that work asynchronously across multiple Peers and are replay and deletion attack resistant. Each Peer has an end-verifiable (via signature) monotonically updated view of the data records sourced from the other Peers.
 
-The acronym for the traditional client-server database update policy is CRUD (Create, Read, Update, Delete). The acronym for the new peer-to-peer end-verifiable monotonic update policy is RUN (Read, Update, Nullify). As described above, because the source of truth for each data item is a decentralized controller Peer, a given database hosted by any Peer does not *create* records in the traditional sense of a server creating records for a client. The hosting Peer merely stores a copy of an Update sent out by the source Peer (controller). Thus there is no Create only Update. To clarify, a source Peer updates other Peers. Moreover, non-interactive monotonic update logic that is replay and deletion attack resistant means that a hosting Peer MUST NOT ever delete a record storing the latest version of an Update. Thus there is no Delete. Instead of Delete, Peers Nullify. A Nullify is a special type of Update that indicates that the data in the record is no longer valid without erasing the record that includes a reference to the latest monotonic determining anchor and/or date-time. There are two ways to indicate Nullification. The first is to assign a `null` value to the record. This works for single field records. The second is to assign a Boolean logic flag field that indicates the record has been Nullified. This works for multi-field records.
+The acronym for the traditional client-server database update policy is CRUD (Create, Read, Update, Delete). The acronym for the new peer-to-peer end-verifiable monotonic update policy is RUN (Read, Update, Nullify). As described above, because the source of truth for each data item is a decentralized controller Peer, a given database hosted by any Peer does not *create* records in the traditional sense of a server creating records for a client. The hosting Peer merely stores a copy of an Update to records sent out by the source Peer (controller). Thus there is no Create action only Update action. When a Peer has not yet seen any version of a record, then its copy is vacuous and is replaced by the first Update its sees.  To clarify, a source Peer updates other Peers by sending out the latest copy or version of its own record. The original copy or version is always created by the source Peer. 
 
-
-## Authorized Endpoint Disclosure 
-
-Primary Discovery Data are Endpoints of KERI Components:
-Controllers, Agents, Backers (Witness, Registrar), Watchers, Jurors, Judges, Forwarders
-Endpoint is URL IP Scheme, Host, Port, Path etc
-Data Model for Securely Managing EndPoint Data
-Controller (Principal AID) 
-Authorizes a Component to act as Player in Role
-Player is AID of Component Controller
-Role is purpose or function such as Watcher
-Zero Trust Data as  Authorization in context of KERI KeyState
-ACDC Issue Revoke Reissue model
+In order to ensure that the hosting Peers are resistant to replay and deletion attacks, they apply non-interactive monotonic update logic to any updates they receive from the source Peer. This means that a hosting Peer MUST NOT ever delete a record storing the latest version of an Update. Thus there is no Delete. Instead of Delete, Peers Nullify. A Nullify is a special type of Update that indicates that the data in the record is no longer valid without erasing the record that includes a reference to the latest monotonic determining anchor and/or date-time. There are two ways to indicate Nullification. The first is to assign a `null` value to the record. This works for single field records. The second is to assign a Boolean logic flag field that indicates the record has been Nullified. This works for multi-field records.
 
 
-RUN model (Read, Update, Nullify) 
-Anchored or Signed with replay and deletion attack protection
+## OOBI KERI Endpoint Authorization (OKEA)
 
-Minimally Sufficient Means
-Leverage existing internet but safely, with end-verifiability
-Internet DNS/CA is out-of-band w.r.t. KERI security
-Use DSN/CA for out-of-band introductions w.r.t. KERI only, not authentication
-Use IP addresses (128.187.16.184) for communication 
+An important use case for BADA-RUN is to process OOBIs that provide service endpoint discovery of the AIDS of KERI components. These components include but are not limited to, Controllers, Agents, Backers (Witness or Registrar), Watchers, Jurors, Judges, and Forwarders. An endpoint is a URL that may include an IP Scheme, Host, Port, and Path. The model for securely managing endpoint data starts with a Principal Controller of an AID. A Principal Controller authorizes some other component to act as a Player in a Role. Typically a Role serves some function needed by the Principal Controller to support its AID and may be reached at a service endpoint URL for that Role. Each component in turn is the Controller of its own AID. Each component AID is a Player that may provide or act in a Role on behalf of the Principal Controller by providing services at the associated service endpoint for its associated Role. 
 
-Non-interactive.
-Memory (sequence number, date-time stamp, nullification)
-More scalable  
+The authorization model uses a zero-trust BADA-RUN policy to Update authorizations. A Principal Controller authorizes a Player by signing a Role authorization message that authorizes the Player's AID to act in a role. A Player authorizes its endpoint URL by signing an endpoint authorization message that authorizes a URL (location) with a scheme. Any Peer may keep an updated copy of the latest service endpoint URL(s) provided by a Player in a Role for a given Principal AID by following the BADA-RUN policy on updates sent to its database of these authorizations. The authorizations are issued in the context of the KERI key-state for the Principal and Player AIDs.
 
-Zero Trust Percolated Discovery
+Some components (Players in Roles) are implicitly authorized by the Principal controller by being explicitly designated in the KEL of the Principal, i.e. there is no explicit authorization message of the Player/Role. The authorization is implied by the KEL entry. For example, a Backer designation of a Witness or Registrar AID implicitly authorizes that AID to act as a Player in the Role of Witness or Registrar. An associated explicit endpoint authorization message signed by that Witness or Backer is still needed to provide the URL (location and scheme) of the actual service endpoint for that Player.
 
-### OOBI KERI Endpoint Authorization (OKEA)
+The combination of KERI and the BADA-RUN policy enables any Controller to manage data in a zero-trust architecture at the database level. Any controller may promulgate verifiably authentic information with replay and deletion attack resistance. The authentic information may be merely source data or may be authorizations to enable some other function. The hard work of determining the associated key-state is provided by KERI. KERI makes the establishment of authenticity straightforward. The BADA-Run policy protects against replay and deletion attacks given authentic data. 
 
-Example application of BADA-RUN
+This approach follows the many thin layers approach of the Hourglass protocol model.  BADA-RUN is a thin layer on top of KERI authenticity. OOBIs are a thin discovery layer that sits on top of a thin authorization layer (leveraging reply messages and BADA-RUN logic) on top of KERI. 
 
-Datetime stamped BADA authorization by CID of EID in Role (Update)
-Datetime stamped BADA deauthorization by CID of EID in Role (Nullify)
-Datetime stamped BADA authorization by EID of  URL for scheme (Update).
-Datetime stamped BADA deauthorization by EID of URL for scheme  (Nullify)  
+This also follows the design ethos of KERI of minimally sufficient means. OOBIs leverage the existing Internet discovery mechanisms but without needing to trust the Internet security model (or the lack of one). End-verifiability in KERI provides safety to any OOBI discovery. The Internet's discovery mechanism, DNS/CA, is out-of-band with respect to KERI security guarantees. Thus OOBIs may safely use DNS/CA, web search engines, social media, email, and messaging as discovery mechanisms. The worst case is the OOBI fails to result in a successful discovery and some other OOBI must be used.
 
+Typically, the query of a ReST endpoint given by the OOBI URL could return as proof any associated authorizing reply message(s) as well as any associated KELs. 
 
-Upon acceptance of an OOBI the recipient queries the provided URL for proof that the URL is an authorized endpoint for the given AID. The proof format may depend on the actual role of the endpoint. A current witness for an AID is designated in the current key state's latest establishment event in the AID's KEL. Therefore merely replying with the Key State or KEL may serve as proof for a witness introduced by an OOBI. 
+### Authorized Endpoint Disclosure Example
 
-Other roles are not part of key state (i.e. are not designated in KEL establishment events) and therefore must be authorized by another mechanism. This typically will be a signed /end/role/ reply message. So the query of the OOBI URL could return as proof an associated authorizing reply message. For example,
+This section provides an example of using OKEA (OOBI KERI Endpoint Authorization) with BADA-RUN for endpoint disclosure.
 
-Example reply message.
+The KERI protocol defines a generic `reply` message for updating information using the BADA-RUN policy. Each `reply` message includes a route, `r`, field that indicates both the type of the payload and the handler that should process the message. The route, `r`, field value is a slash, `/` delimited pathname string.  The Principal Controller AID is indicated by the CID (Controller ID) or `cid` field. The endpoint component Player is indicated the EID (Endpoint Controller ID) or `eid` field. There are two different authorization cases. In one case, a CID authorizes an EID in a Role. In the other case, an EID authorizes a Loc (URL location) for a scheme. There are two routes for each type of authorization. One route updates the authorization and the other nullifies the authorization. These are summarized as follows,
+
+* Datetime stamped BADA authorization Reply message by CID of EID in Role (Update)
+* Datetime stamped BADA deauthorization by CID of EID in Role (Nullify)
+* Datetime stamped BADA authorization by EID of  URL for scheme (Update).
+* Datetime stamped BADA deauthorization by EID of URL for scheme  (Nullify)  
+
+A party interested in discovering the service endpoint for a given Controller AID initiates the discovery by providing an OOBI. A successful discovery will result in the return of signed `reply` messages that provide verifiable proof that the service endpoint (either directly provided in the OOBI, or indirectly provided via forwarding) is an authorized endpoint for that AID.
+
+To summarize, upon acceptance of an OOBI the recipient queries the provided URL for proof that the URL is an authorized endpoint for the given AID. The proof format may depend on the actual role of the endpoint. A current witness for an AID is designated in the current key state's latest establishment event in the AID's KEL. Therefore merely replying with the Key State or KEL may serve as proof for a witness introduced by an OOBI. The actual URL may be authorized by an attendant signed `/loc/scheme` reply message with the URL.
+
+Other roles that are not explicitly part of key-state (i.e. are not designated in KEL establishment events) must be authorized by explicit signed reply messages. Typically these will be a signed `/end/role/` reply message. The actual URL may be authorized by an attendant signed `/loc/scheme` reply message with the URL.
+
+Example reply messages.
+
+#### Player EID in Role by CID
 
 ~~~json
 {
-  "v" : "KERI10JSON00011c_",
-  "t" : "rpy",
-  "d": "EZ-i0d8JZAoTNZH3ULaU6JR2nmwyvYAfSVPzhzS6b5CM",
-  "dt": "2020-08-22T17:50:12.988921+00:00",
-  "r" : "/end/role/add",
-  "a" :
+  "v": "KERI10JSON000113_",
+  "t": "rpy",
+  "d": "Ekd189yFsX1eLhQ2NffI6AaF8ZxKXyej_jfn4wMNJq-w",
+  "dt": "2021-01-01T00:00:00.000000+00:00",
+  "r": "/end/role/add",
+  "a":
   {
-     "cid":  "EaU6JR2nmwyZ-i0d8JZAoTNZH3ULvYAfSVPzhzS6b5CM",
-     "role": "watcher", 
-     "eid": "BrHLayDN-mXKv62DAjFLX1_Y5yEUe0vA9YPe_ihiKYHE",
+    "cid": "EhlsdBaCvxnW0z3m2OXxStaZkG76g0zC_vtPbPPglDK0",
+    "role": "witness",
+    "eid": "BFUOWBaJz-sB_6b-_u_P9W8hgBQ8Su9mAtN9cY2sVGiY"
   }
 }
 ~~~
 
+#### Endpoint Location with Scheme by EID
 
+~~~json
+{
+  "v": "KERI10JSON000108_",
+  "t": "rpy",
+  "d": "EbAwspDQjS-Ve-tzDtAuzx4K8uhh-0AyXWZrSKm64PFQ",
+  "dt": "2021-01-01T00:00:00.000000+00:00",
+  "r": "/loc/scheme",
+  "a":
+  {
+    "eid": "BFUOWBaJz-sB_6b-_u_P9W8hgBQ8Su9mAtN9cY2sVGiY",
+    "scheme": "http",
+    "url": "http://localhost:8080/controller/tam"
+  }
+}
+
+~~~
+
+
+# SPED (Speedy Percolated Endpoint Discovery)
+
+All the information needed to discover and verify is bootstrapped from the OOBI. Subsequent authorization is non-interactive thus making it highly scalable. BADA-RUN authorization is also lightweight for the host because the only memory requirements are a sequence number, date-time stamp window, and nullification state. This provides what we call zero-trust percolated discovery or speedy percolated discovery {{PT}}{{FPP}}{{IPT}}{{DOMIP}}. Percolation means that each discoverer in turn may share what it discovers with any subsequent discoverers. Because the information so discovered is end-verifiable, the percolation mechanism does not need to be trusted. Percolating intermediaries do not need to be trusted.
+
+## JIT/NTK Discovery
+
+just-in-time/need-to-know discovery
+ToDo
 
 # OOBI Variants
 
 ## Multi-OOBI (MOOBI)
 
-An OOBI may include a list of URLs thus simultaneously making an introductory association between the AID and multiple URLs. This would be a multi-OOBI (MOOBI). In general we may refer to a multi-OOBI as a special case of an OOBI without making a named distinction. 
+An OOBI may include a list of URLs thus simultaneously making an introductory association between the AID and multiple URLs. This would be a multi-OOBI (MOOBI). In general, we may refer to a multi-OOBI as a special case of an OOBI without making a named distinction. 
 
 
-## OOBI as URL (iurl)
+## OOBI as URL 
 
 URLs provide a namespace which means that the mapping between URL and AID can be combined into one namespaced URL where the AID is in the path component and any other hints such as roles or names are in the query component of the URL. This would be a type of self-describing OOBI URL.  
 
@@ -368,7 +389,7 @@ http://8.8.5.6:8080/oobi/EaU6JR2nmwyZ-i0d8JZAoTNZH3ULvYAfSVPzhzS6b5CM
 This is called an ***OOBI URL*** or `iurl` for short.
 This means that all that is needed to bootstrap discovery of a KERI AID is an `iurl`. KERI can leverage the full IP/DNS infra-structure for discovery bootstrap of an `aid` by providing an `iurl` with that `aid` for lookup. 
 
-The aid may act in any of the KERI roles such as `watcher`, `witness`, `juror`, `judge` or `registrar` but is usually a  `controller`. In the later case the url may be a service endpoint provided by one of the supporting components for a given controller. Thus the `aid` in an OOBI may be either a controller id, `cid` or an endpoint provider id, `eid`. The resource at that URL in the OOBI is ultimately responsible for providing that detail but an OOBI as URL may contain hints in the query string for the URL such as a `role` or `name` designation.
+The aid may act in any of the KERI roles such as `watcher`, `witness`, `juror`, `judge` or `registrar` but is usually a  `controller`. In the later case, the `iurl` may be a service endpoint provided by one of the supporting components for a given controller. Thus the `aid` in an OOBI may be either a controller id, `cid` or an endpoint provider id, `eid`. The resource at that URL in the OOBI is ultimately responsible for providing that detail but an OOBI as a URL may contain hints in the query string for the URL such as a `role` or `name` designation.
 
 ~~~python
 http://8.8.5.6:8080/oobi/EaU6JR2nmwyZ-i0d8JZAoTNZH3ULvYAfSVPzhzS6b5CM?role=watcher&name=eve
@@ -376,12 +397,13 @@ http://8.8.5.6:8080/oobi/EaU6JR2nmwyZ-i0d8JZAoTNZH3ULvYAfSVPzhzS6b5CM?role=watch
 https://example.com/oobi/EaU6JR2nmwyZ-i0d8JZAoTNZH3ULvYAfSVPzhzS6b5CM?role=witness
 ~~~
 
-When the role is provided in the `iurl`, the AID (EID) of the the endpoint provider for that role would be discovered via the proof returned by querying the URL. The proof returned may indicate a different URL for that role. Thus a self-describing OOBI URL may act as a forwarding mechanism. 
+When the role is provided in the `iurl`, the AID (EID) of the endpoint provider for that role would be discovered via the proof returned by querying the URL. The proof returned may indicate a different URL for that role. Thus a self-describing OOBI URL may act as a forwarding mechanism. 
 
-To clarify, the minimum information in an OOBI is pair, `(url, aid)`. A compact representation of an OOBI leverages the namespacing of the URL itself to provide the AID. Furthermore the query string in the URL namespace may contain other information or hints such as the role of the service endpoint represented by the URL or a user friendly name.  
+To clarify, the minimum information in an OOBI is the pair, `(url, aid)`. A compact representation of an OOBI leverages the namespacing of the URL itself to provide the AID. Furthermore, the query string in the URL namespace may contain other information or hints such as the role of the service endpoint represented by the URL or a user-friendly name.  
 
 
 ## Well-Known
+
 An OOBI may be returned as the result of a get request to an IETF RFC 5785  well-known URL. For example,
 
 ~~~python
@@ -399,10 +421,11 @@ http://8.8.5.5:8080/witness/witmer
 http://10.0.5.15:8088/witness/witmer
 ~~~
 
-The resultant target URL may be in a different domain or IP address from the well-known resource.
+The resultant target URL may be in a different domain or IP address from the `well-known` resource.
 
 
 ## Full CID and EID
+
 A more verbose version would also include the endpoint role and the AID (EID) of the endpoint provider in a self-describing OOBI URL. For example,
 
 ~~~python
@@ -419,47 +442,50 @@ Where
 
 ## KERI Reply Messages as OOBIs
 
-A more verbose expression for an OOBI would be a KERI reply message `rpy` that is unsigned. The route specifies that it is an OOBI so the recipient knows to apply OOBI processing logic to the message. A list of URLs is provided so that it may provide multiple introductions.   For example,
+A more verbose expression for an OOBI would be a KERI reply message `rpy` that is unsigned. The route, `r`, field in the message starts with `/oobi`. This specifies that it is an OOBI so the recipient knows to apply OOBI processing logic to the message. A list of URLs may be provided so that one reply message may provide multiple introductions.   For example,
 
 ~~~json
 {
-          "v" : "KERI10JSON00011c_",
-          "t" : "rpy",
-          "d": "EZ-i0d8JZAoTNZH3ULaU6JR2nmwyvYAfSVPzhzS6b5CM",
-          "dt": "2020-08-22T17:50:12.988921+00:00",
-          "r" : "/oobi/witness",
-          "a" :
-          {
-             "urls":  ["http://example.com/watcher/watson", "http://example.com/witness/wilma"]
-             "aid":  "EaU6JR2nmwyZ-i0d8JZAoTNZH3ULvYAfSVPzhzS6b5CM"
-          }
+  "v" : "KERI10JSON00011c_",
+  "t" : "rpy",
+  "d": "EZ-i0d8JZAoTNZH3ULaU6JR2nmwyvYAfSVPzhzS6b5CM",
+  "dt": "2020-08-22T17:50:12.988921+00:00",
+  "r" : "/oobi/witness",
+  "a" :
+  {
+    "urls":  
+    [
+      "http://example.com/watcher/watson", 
+      "http://example.com/witness/wilma"
+    ],
+    "aid":  "EaU6JR2nmwyZ-i0d8JZAoTNZH3ULvYAfSVPzhzS6b5CM"
+  }
 }
 ~~~
 
-A service endpoint location reply message could also be re-purposed as an OOBI by using a special route path that includes the AID being introduced and optionally the role of the service endpoint provider as follows,
+A service endpoint location reply message could also be re-purposed as an OOBI by using a special route path that starts with `/oobi` but also includes the AID being introduced and optionally the role of the service endpoint provider. This approach effectively combines the information from both the  `/end/role` and `/loc/scheme` reply messages into one. This may allow a shortcut to authenticate the service endpoint. This is shown below.
 
 ~~~json
 {
-          "v" : "KERI10JSON00011c_",
-          "t" : "rpy",
-          "d": "EZ-i0d8JZAoTNZH3ULaU6JR2nmwyvYAfSVPzhzS6b5CM",
-          "dt": "2020-08-22T17:50:12.988921+00:00",
-          "r" : "/oobi/EaU6JR2nmwyZ-i0d8JZAoTNZH3ULvYAfSVPzhzS6b5CM/watcher",
-          "a" :
-          {
-             "eid": "BrHLayDN-mXKv62DAjFLX1_Y5yEUe0vA9YPe_ihiKYHE",
-             "scheme": "http", 
-             "url":  "http://example.com/watcher/wilma"
-          }
+  "v" : "KERI10JSON00011c_",
+  "t" : "rpy",
+  "d": "EZ-i0d8JZAoTNZH3ULaU6JR2nmwyvYAfSVPzhzS6b5CM",
+  "dt": "2020-08-22T17:50:12.988921+00:00",
+  "r" : "/oobi/EaU6JR2nmwyZ-i0d8JZAoTNZH3ULvYAfSVPzhzS6b5CM/watcher",
+  "a" :
+  {
+    "eid": "BrHLayDN-mXKv62DAjFLX1_Y5yEUe0vA9YPe_ihiKYHE",
+    "scheme": "http", 
+    "url":  "http://example.com/watcher/wilma"
+  }
 }
 ~~~
 
-This more verbose approach includes the AID (EID) of the service endpoint provider which may allow a short cut to authenticating the service endpoint.
+
 
 # Self and Blind Introductions
 
-A bare URL but no AID may be used as a bare OOBI for blind or self-introductions e.g. a blind OOBI or self OOBI. Querying that bare OOBI may return or result in a default target OOBI or default target endpoint reply. This provides a mechanism for self-introduction or blind i.e. self OOBI (SOOBI). Consider examples of bare OOBIs below.
-
+A bare URL but no AID may be used as a blind OOBI for blind or self-introductions e.g. a blind OOBI or self OOBI. Querying that blind OOBI may return or result in a default target OOBI or default target endpoint reply. This provides a mechanism for self-introduction or blind i.e. self OOBI (SOOBI). Consider the examples of blind OOBIs below.
 
 ~~~python
 http://8.8.5.7:8080/oobi
@@ -472,33 +498,29 @@ http://localhost:8080/oobi?role=controller&name=eve
 ~~~ 
 
 
-By default, the result of get request to this OOBI URL could be another OOBI with an AID that is the `self` AID of the node providing the bare OOBI endpoint or the actual authenticatable `self` endpoint with its AID or a default set of authenticatable endpoints. This is useful to bootstrap components in an infrastructure where the target URLs do not use a public DNS address but use instead something more secure like an explicit public IP address or a private IP or private DNS address. A self introduction provides a bootstrap mechanism similar to a hostname configuration file with the exception that in the OOBI case the AID is not in the configuration file just the bare OOBI URL and the given node queries that bare OOBI to get the target endpoint AID.  This allows bootstrap using bare IP addresses in systems where the IP infrastructure is more securely managed than public DNS or where some other Out-Of-Band-Authentication (OOBA) mechanism is used in concert. 
+To elaborate, by default, the result of a `GET` request to a blind OOBI URL could be another OOBI with an AID that is the `self` AID of the node providing the blind OOBI endpoint or the actual authenticatable `self` endpoint with its AID or a default set of authenticatable endpoints. This is useful to bootstrap components in an infrastructure where the target URLs do not use a public DNS address but instead use something more secure like an explicit public IP address or a private IP or private DNS address. A self-introduction provides a bootstrap mechanism similar to a hostname configuration file with the exception that in the OOBI case the AID is not in the configuration file just the bare URL and the given node queries that bare URL (blind OOBI) to get the target endpoint AID.  This allows bootstrap using bare IP addresses in systems where the IP infrastructure is more securely managed than public DNS or where some other Out-Of-Band-Authentication (OOBA) mechanism is used in concert. 
 
-
-
-Because the OOBI does not expose an AID, the resultant response when querying the OOBI may depend on other factors such as the source IP of the querier (requester) and/or another out-of-band-authentication (OOBA) mechanism. This supports private bootstrap of infrastructure. 
+To clarify, because a bare URL, blind OOBI, does not expose an AID, the resultant response when querying the OOBI may depend on other factors such as the source IP of the querier (requester) and/or another out-of-band-authentication (OOBA) mechanism. This supports the private bootstrap of infrastructure. 
 Of course one could argue that this is just kicking the can down the road but IP addresses are correlatable and a blind OOBI can leverage IP infrastructure for discovery when used in combination with some other OOBA mechanism without unnecessary correlation.
-Onion Routing with Blind OOBI
-did-comm with Blind OOBI
 
 This may be especially useful to bootstrap components in an infrastructure where the target URLs do not use a public DNS address but use instead something more secure like an explicit public IP address or a private IP or private DNS address. A self-introduction provides a bootstrap mechanism similar to a hostname configuration file with the exception that in the OOBI case the AID is not in the configuration file just the bare OOBI URL and the given node queries that bare OOBI to get the target endpoint AID.  This allows bootstrap using bare IP addresses in systems where the IP infrastructure is more securely managed than public DNS or where some other Out-Of-Band-Authentication (OOBA) mechanism is used in concert.  Because the OOBI itself does not contain an AID the association of the resultant AID is not provided by the OOBI and the resultant AID's association must be secured by some other mechanism. 
 
-For example, a given indirect mode controller is identified by its AID (CID). The controller must also create witness hosts with endpoints. This means first spinning up witness host nodes and creating witness AIDs (WIDs) for those nodes. Given that these WIDs must be eventually designated in the KEL for the CID, the controller of the CID can confirm using its KEL that the signed endpoint reply provided by a bare OOBI request is indeed signed by the corresponding private keys for a WID designated in its KEL. This means that the only place that the WID must appear is in the KEL and not in all the config files used to boostrap communications between the CID host and its designated WID hosts. Bare OOBIs will do. The redundant configuration information may be a vector for a type of DDOS attack where corrupted inconsistent redundant configuration information results in a failure to boot a system that must be manually fixed. Redundancy for security is best applied in the context of a self-healing or resilient threshold structure that explicitly manages the redundancy as a security mechanism not as un-managed inadvertent redundancy.
+For example, a given indirect mode controller is identified by its AID (CID). The controller must also create witness hosts with endpoints. This means first spinning up witness host nodes and creating witness AIDs (WIDs) for those nodes. Given that these WIDs must be eventually designated in the KEL for the CID, the controller of the CID can confirm using its KEL that the signed endpoint reply provided by a bare OOBI request is indeed signed by the corresponding private keys for a WID designated in its KEL. This means that the only place that the WID must appear is in the KEL and not in all the config files used to bootstrap communications between the CID host and its designated WID hosts. Bare OOBIs will do. The redundant configuration information may be a vector for a type of DDOS attack where corrupted inconsistent redundant configuration information results in a failure to boot a system that must be manually fixed. Redundancy for security is best applied in the context of a self-healing or resilient threshold structure that explicitly manages the redundancy as a security mechanism not as un-managed inadvertent redundancy.
 
 
-Equivalently a bare OOBI (no AID) provides a mechanism for blind introductions, i.e. a blind or bare OOBI (BOOBI). Because the OOBI does not expose an AID, the resultant response when querying the OOBI may depend on other factors such as the source IP of the querier (requester) and/or another out-of-band-authentication (OOBA) mechanism. This supports private bootstrap of infrastructure. Of course one could argue that this is just kicking the can down the road but IP addresses are correlatable and a blind OOBI can leverage IP infrastructure for discovery when used in combination with some other OOBA mechanism without unnecessary correlation.
+## Onion Routing with Blind OOBIs
+ToDo
 
 
-# OOBI Forwading  
 
+# OOBI Forwarding  
 
 In every case, an OOBI may result in a proof for a different URL than that provided in the OOBI itself. The allows OOBI forwarding so that introductions produced as hard copies such as QR codes do not necessarily become stale. The recipient of the OOBI may choose to accept that proof or not. Ultimately the recipient only treats URLs as valid endpoints when they are fully KERI authenticated. Given that an OOBI result is always KERI authenticated before use in a given role, the worst case from a security perspective is that an OOBI may be part of a DDOS attack but not as part of a service endpoint cache poison attack.
 
 
-
 # OOBI with MFA
 
-An OOBI may be augmented with one or more Out-Of-Band Authentications (OOBAs) to minimize the likelihood of a DDOS OOBI attack. A given recipient may require as a precondition to accepting an OOBI one or more  OOBA mechanisms such as text messages, emails, etc that together provide some degree of non-KERI based security to the OOBI. Thus an OOBI could employ out-of-band (with respect to KERI) multi-factor-authentication (MFA) to preclude any OOBI based DDOS attacks on KERI.
+An OOBI may be augmented with one or more Out-Of-Band Authentications (OOBAs) to minimize the likelihood of a DDOS OOBI attack. A given recipient may require as a precondition to accepting an OOBI one or more  OOBA mechanisms such as text messages, emails, etc that together provide some degree of non-KERI-based security to the OOBI. Thus an OOBI could employ out-of-band (with respect to KERI) multi-factor-authentication (MFA) to preclude any OOBI-based DDOS attacks on KERI.
 
 # KERI OOBI Use in Installation Configuration 
 
@@ -508,10 +530,10 @@ The main value of an OOBI is that it is compact and is not encumbered by authent
 
 One way to pre-configure a vacuous KERI installation is to provide OOBIs in a configuration file. The bootstrap process of the installation then queries the associated URLs to retrieve the KERI authentication proofs (BADA) that then are used to populate its database securely. This simplifies the configuration file.
 
-In contrast, an alternative would be to populate the configuration file with the KERI authentication proofs. But these proofs may be quite verbose and cumbersome and may make the config file somewhat difficult to manage in human readable/writable form. Furthermore if one already had the proofs one could just pre-populate the database with those proofs. Therefore OOBI based configuration fiels may be advantageous as either easier to manage and as a viable option when the proofs are not yet available at configuration time.
+In contrast, an alternative would be to populate the configuration file with the KERI authentication proofs. But these proofs may be quite verbose and cumbersome and may make the config file somewhat difficult to manage in human-readable/writable form. Furthermore if one already had the proofs one could just pre-populate the database with those proofs. Therefore OOBI based configuration files may be advantageous as either easier to manage or as a viable option when the proofs are not yet available at configuration time.
 
-Furthermore a clean clone replay restart of a given KERI component is designed to fix any unverified corruption of its associated KELs.
-If each component uses OOBIs to retrieve the authentication proofs from other components then all the components will have the cleaned proofs instead of stale proofs. 
+Furthermore, a clean clone replay restart of a given KERI component is designed to fix any unverified corruption of its associated KELs.
+If each component uses OOBIs to retrieve the authentication proofs from other components then all the components will have clean proofs instead of stale proofs. 
 
 
 ## OOBI Response
@@ -522,8 +544,14 @@ a config file.
 
 # Data OOBI (DOOBI)
 
-# SPED (Speedy Percolated Endpoint Discovery)
+ToDo
 
+
+## DID Resolvers with OOBIs
+ToDo
+
+## DID-Comm with OOBIs
+ToDo
 
 # Conventions and Definitions
 
