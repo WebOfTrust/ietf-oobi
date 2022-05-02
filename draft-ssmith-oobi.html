@@ -1396,10 +1396,10 @@ Rules for the acceptance of the *Update*:  (in order of priority)
 <p id="section-3.4.1-5">To summarize, upon acceptance of an OOBI the recipient queries the provided URL for proof that the URL is an authorized endpoint for the given AID. The proof format may depend on the actual role of the endpoint. A current witness for an AID is designated in the current key state's latest establishment event in the AID's KEL. Therefore merely replying with the Key State or KEL may serve as proof for a witness introduced by an OOBI. The actual URL may be authorized by an attendant signed <code>/loc/scheme</code> reply message with the URL.<a href="#section-3.4.1-5" class="pilcrow">¶</a></p>
 <p id="section-3.4.1-6">Other roles that are not explicitly part of key-state (i.e. are not designated in KEL establishment events) must be authorized by explicit signed reply messages. Typically these will be a signed <code>/end/role/</code> reply message. The actual URL may be authorized by an attendant signed <code>/loc/scheme</code> reply message with the URL.<a href="#section-3.4.1-6" class="pilcrow">¶</a></p>
 <p id="section-3.4.1-7">Example reply messages.<a href="#section-3.4.1-7" class="pilcrow">¶</a></p>
-<div id="player-eid-in-role-by-cid">
+<div id="player-eid-in-role-by-cid-update">
 <section id="section-3.4.1.1">
-            <h5 id="name-player-eid-in-role-by-cid">
-<a href="#section-3.4.1.1" class="section-number selfRef">3.4.1.1. </a><a href="#name-player-eid-in-role-by-cid" class="section-name selfRef">Player EID in Role by CID</a>
+            <h5 id="name-player-eid-in-role-by-cid-u">
+<a href="#section-3.4.1.1" class="section-number selfRef">3.4.1.1. </a><a href="#name-player-eid-in-role-by-cid-u" class="section-name selfRef">Player EID in Role by CID Update</a>
             </h5>
 <div id="section-3.4.1.1-1">
 <pre class="lang-json sourcecode">
@@ -1420,12 +1420,36 @@ Rules for the acceptance of the *Update*:  (in order of priority)
 </div>
 </section>
 </div>
-<div id="endpoint-location-with-scheme-by-eid">
+<div id="player-eid-in-role-by-cid-nullify">
 <section id="section-3.4.1.2">
-            <h5 id="name-endpoint-location-with-sche">
-<a href="#section-3.4.1.2" class="section-number selfRef">3.4.1.2. </a><a href="#name-endpoint-location-with-sche" class="section-name selfRef">Endpoint Location with Scheme by EID</a>
+            <h5 id="name-player-eid-in-role-by-cid-n">
+<a href="#section-3.4.1.2" class="section-number selfRef">3.4.1.2. </a><a href="#name-player-eid-in-role-by-cid-n" class="section-name selfRef">Player EID in Role by CID Nullify</a>
             </h5>
 <div id="section-3.4.1.2-1">
+<pre class="lang-json sourcecode">
+{
+  "v": "KERI10JSON000113_",
+  "t": "rpy",
+  "d": "EZ-i0d8JZAoTNZH3ULaU6JR2nmwyvYAfSVPzhzS6b5CM",
+  "dt": "2021-01-01T00:00:00.000000+00:00",
+  "r": "/end/role/cut",
+  "a":
+  {
+    "cid": "EhlsdBaCvxnW0z3m2OXxStaZkG76g0zC_vtPbPPglDK0",
+    "role": "witness",
+    "eid": "BFUOWBaJz-sB_6b-_u_P9W8hgBQ8Su9mAtN9cY2sVGiY"
+  }
+}
+</pre><a href="#section-3.4.1.2-1" class="pilcrow">¶</a>
+</div>
+</section>
+</div>
+<div id="endpoint-location-with-scheme-by-eid-update">
+<section id="section-3.4.1.3">
+            <h5 id="name-endpoint-location-with-sche">
+<a href="#section-3.4.1.3" class="section-number selfRef">3.4.1.3. </a><a href="#name-endpoint-location-with-sche" class="section-name selfRef">Endpoint Location with Scheme by EID Update</a>
+            </h5>
+<div id="section-3.4.1.3-1">
 <pre class="lang-json sourcecode">
 {
   "v": "KERI10JSON000108_",
@@ -1441,7 +1465,33 @@ Rules for the acceptance of the *Update*:  (in order of priority)
   }
 }
 
-</pre><a href="#section-3.4.1.2-1" class="pilcrow">¶</a>
+</pre><a href="#section-3.4.1.3-1" class="pilcrow">¶</a>
+</div>
+</section>
+</div>
+<div id="endpoint-location-with-scheme-by-eid-nullify">
+<section id="section-3.4.1.4">
+            <h5 id="name-endpoint-location-with-schem">
+<a href="#section-3.4.1.4" class="section-number selfRef">3.4.1.4. </a><a href="#name-endpoint-location-with-schem" class="section-name selfRef">Endpoint Location with Scheme by EID Nullify</a>
+            </h5>
+<p id="section-3.4.1.4-1">To Nullify set the <code>url</code> to the empty string <code>""</code>.<a href="#section-3.4.1.4-1" class="pilcrow">¶</a></p>
+<div id="section-3.4.1.4-2">
+<pre class="lang-json sourcecode">
+{
+  "v": "KERI10JSON000108_",
+  "t": "rpy",
+  "d": "EbAwspDQjS-Ve-tzDtAuzx4K8uhh-0AyXWZrSKm64PFQ",
+  "dt": "2021-01-01T00:00:00.000000+00:00",
+  "r": "/loc/scheme",
+  "a":
+  {
+    "eid": "BFUOWBaJz-sB_6b-_u_P9W8hgBQ8Su9mAtN9cY2sVGiY",
+    "scheme": "http",
+    "url": ""
+  }
+}
+
+</pre><a href="#section-3.4.1.4-2" class="pilcrow">¶</a>
 </div>
 </section>
 </div>

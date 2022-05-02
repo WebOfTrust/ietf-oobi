@@ -527,7 +527,7 @@ Rules for the acceptance of the *Update*:  (in order of priority)
 
    Example reply messages.
 
-3.4.1.1.  Player EID in Role by CID
+3.4.1.1.  Player EID in Role by CID Update
 
    {
      "v": "KERI10JSON000113_",
@@ -543,7 +543,23 @@ Rules for the acceptance of the *Update*:  (in order of priority)
      }
    }
 
-3.4.1.2.  Endpoint Location with Scheme by EID
+3.4.1.2.  Player EID in Role by CID Nullify
+
+   {
+     "v": "KERI10JSON000113_",
+     "t": "rpy",
+     "d": "EZ-i0d8JZAoTNZH3ULaU6JR2nmwyvYAfSVPzhzS6b5CM",
+     "dt": "2021-01-01T00:00:00.000000+00:00",
+     "r": "/end/role/cut",
+     "a":
+     {
+       "cid": "EhlsdBaCvxnW0z3m2OXxStaZkG76g0zC_vtPbPPglDK0",
+       "role": "witness",
+       "eid": "BFUOWBaJz-sB_6b-_u_P9W8hgBQ8Su9mAtN9cY2sVGiY"
+     }
+   }
+
+3.4.1.3.  Endpoint Location with Scheme by EID Update
 
    {
      "v": "KERI10JSON000108_",
@@ -556,6 +572,24 @@ Rules for the acceptance of the *Update*:  (in order of priority)
        "eid": "BFUOWBaJz-sB_6b-_u_P9W8hgBQ8Su9mAtN9cY2sVGiY",
        "scheme": "http",
        "url": "http://localhost:8080/controller/tam"
+     }
+   }
+
+3.4.1.4.  Endpoint Location with Scheme by EID Nullify
+
+   To Nullify set the url to the empty string "".
+
+   {
+     "v": "KERI10JSON000108_",
+     "t": "rpy",
+     "d": "EbAwspDQjS-Ve-tzDtAuzx4K8uhh-0AyXWZrSKm64PFQ",
+     "dt": "2021-01-01T00:00:00.000000+00:00",
+     "r": "/loc/scheme",
+     "a":
+     {
+       "eid": "BFUOWBaJz-sB_6b-_u_P9W8hgBQ8Su9mAtN9cY2sVGiY",
+       "scheme": "http",
+       "url": ""
      }
    }
 
