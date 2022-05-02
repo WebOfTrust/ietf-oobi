@@ -316,7 +316,7 @@ Other roles that are not explicitly part of key-state (i.e. are not designated i
 
 Example reply messages.
 
-#### Player EID in Role by CID
+#### Player EID in Role by CID Update
 
 ~~~json
 {
@@ -334,7 +334,26 @@ Example reply messages.
 }
 ~~~
 
-#### Endpoint Location with Scheme by EID
+#### Player EID in Role by CID Nullify
+
+~~~json
+{
+  "v": "KERI10JSON000113_",
+  "t": "rpy",
+  "d": "EZ-i0d8JZAoTNZH3ULaU6JR2nmwyvYAfSVPzhzS6b5CM",
+  "dt": "2021-01-01T00:00:00.000000+00:00",
+  "r": "/end/role/cut",
+  "a":
+  {
+    "cid": "EhlsdBaCvxnW0z3m2OXxStaZkG76g0zC_vtPbPPglDK0",
+    "role": "witness",
+    "eid": "BFUOWBaJz-sB_6b-_u_P9W8hgBQ8Su9mAtN9cY2sVGiY"
+  }
+}
+~~~
+
+
+#### Endpoint Location with Scheme by EID Update
 
 ~~~json
 {
@@ -352,6 +371,29 @@ Example reply messages.
 }
 
 ~~~
+
+#### Endpoint Location with Scheme by EID Nullify
+To Nullify set the `url` to the empty string `""`.
+
+~~~json
+{
+  "v": "KERI10JSON000108_",
+  "t": "rpy",
+  "d": "EbAwspDQjS-Ve-tzDtAuzx4K8uhh-0AyXWZrSKm64PFQ",
+  "dt": "2021-01-01T00:00:00.000000+00:00",
+  "r": "/loc/scheme",
+  "a":
+  {
+    "eid": "BFUOWBaJz-sB_6b-_u_P9W8hgBQ8Su9mAtN9cY2sVGiY",
+    "scheme": "http",
+    "url": ""
+  }
+}
+
+~~~
+
+
+
 
 
 # SPED (Speedy Percolated Endpoint Discovery)
