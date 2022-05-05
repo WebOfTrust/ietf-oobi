@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2022-05-03T00:30:28.189109+00:00",
+  "timestamp": "2022-05-05T00:28:55.663338+00:00",
   "repo": "WebOfTrust/ietf-oobi",
   "labels": [
     {
@@ -55,16 +55,24 @@
       "id": "I_kwDOHIiMYM5IJIyz",
       "title": "Add BADA Logic",
       "url": "https://github.com/WebOfTrust/ietf-oobi/issues/12",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "SmithSamuelM",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2022-04-21T00:36:28Z",
-      "updatedAt": "2022-04-21T00:36:28Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2022-05-03T00:53:05Z",
+      "closedAt": "2022-05-03T00:52:58Z",
+      "comments": [
+        {
+          "author": "SmithSamuelM",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Done",
+          "createdAt": "2022-05-03T00:53:05Z",
+          "updatedAt": "2022-05-03T00:53:05Z"
+        }
+      ]
     }
   ],
   "pulls": [
