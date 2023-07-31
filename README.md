@@ -1,3 +1,8 @@
+
+# This repository is superseded by the work at ToIP Technical Stack Working Group ACDC Task Force
+
+https://github.com/trustoverip/tswg-oobi-specification
+
 # Out-Of-Band-Introduction (OOBI) Protocol
 
 This is the working area for the individual Internet-Draft, "Out-Of-Band-Introduction (OOBI) Protocol".
